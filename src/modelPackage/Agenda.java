@@ -1,7 +1,7 @@
 package modelPackage;
 
 /**
- * @author Florian FAGNIEZ - NoÃ©mie RULLIER - Guillaume COUTABLE
+ * @author Florian FAGNIEZ - Noémie RULLIER - Guillaume COUTABLE
  *
  */
 public abstract class Agenda {
