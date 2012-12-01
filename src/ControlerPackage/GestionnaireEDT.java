@@ -1,10 +1,17 @@
 /**
  * 
  */
-package modelPackage;
+package ControlerPackage;
 
 import java.util.ArrayList;
 import java.util.Collection;
+
+import modelPackage.Agenda;
+import modelPackage.AgendaFactory;
+import modelPackage.AgendaICalFactory;
+import modelPackage.Event;
+import modelPackage.ICalAgenda;
+import modelPackage.ICalEvent;
 
 
 /**
