@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ControlerPackage;
+package controlerPackage;
 
 import java.util.ArrayList;
 import java.util.Collection;
