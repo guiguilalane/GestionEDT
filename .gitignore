@@ -7,3 +7,6 @@
 
 # Save files #
 *~
+
+# classpath #
+.classpath
