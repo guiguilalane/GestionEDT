@@ -119,6 +119,9 @@ public class CDate {
 		return year;
 	}
 
+	/*
+	 * 0 = dimanche | ... | 6 = Samedi 
+	 */
 	@SuppressWarnings("deprecation")
 	public int getDayOfWeek() throws ParseException{
 		String sDate = year + "/" + month + "/" + day;
