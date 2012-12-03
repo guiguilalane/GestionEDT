@@ -1,6 +1,10 @@
 package fr.modelPackage;
 
 import java.lang.Integer;
+import java.util.Date;
+
+
+
 
 /**
  * @author Florian FAGNIEZ - Noémie RULLIER - Guillaume COUTABLE
@@ -112,6 +116,10 @@ public class CDate {
 		return year;
 	}
 
+	public int getDayOfWeek(){
+		Date dateValue = new Date();
+		return dateValue.getDay();
+	}
 
 	/**
 	 * @param year the year to set
@@ -182,5 +190,10 @@ public class CDate {
 	 */
 	public void setMinute(int minute) {
 		this.minute = minute;
+	}
+	
+	public static void main(String args[]){
+		CDate test = new CDate(2012, 12, 3, 14, 00);
+		System.out.println(test.getDayOfWeek());
 	}
 }

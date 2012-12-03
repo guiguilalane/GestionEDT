@@ -207,13 +207,13 @@ public class MainWindow extends JFrame {
 			int selectedRow = board.getSelectedRow(); 
 			MyModel modelTemp = (MyModel)board.getModel();
 			HashMap<String,ICalEvent> listTemp = mon_gestionnaire.getICalEvents();
-			String rec = listTemp.get(modelTemp.getValueAt(selectedRow, 3)).getUID().substring(0, 1);
+			char rec = listTemp.get(modelTemp.getValueAt(selectedRow, 3)).getUID().charAt(0);
 			ICalEvent event = listTemp.get(modelTemp.getValueAt(selectedRow, 3));
-			if (rec==""){
+			if (rec == '\0'){
 				listTemp.remove(modelTemp.getValueAt(selectedRow, 3));
 			}
-			// Si l'événement est récurrent 
-			else if(rec=="R"){
+			// Si l'√©v√©nement est r√©current 
+			else if(rec == 'R'){
 				for (ICalEvent e : mon_gestionnaire.getICalEvents().values()){
 					if (e.getdBegin().equals(event.getdBegin()) && e.getdEnd().equals(event.getdEnd()) && e.getModule().equals(event.getModule())){
 						listTemp.remove(e.getUID());
