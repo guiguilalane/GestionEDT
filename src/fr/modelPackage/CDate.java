@@ -1,6 +1,9 @@
 package fr.modelPackage;
 
 import java.lang.Integer;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
@@ -116,9 +119,12 @@ public class CDate {
 		return year;
 	}
 
-	public int getDayOfWeek(){
-		Date dateValue = new Date();
-		return dateValue.getDay();
+	@SuppressWarnings("deprecation")
+	public int getDayOfWeek() throws ParseException{
+		String sDate = year + "/" + month + "/" + day;
+		DateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+		Date date = format.parse(sDate);
+		return date.getDay();
 	}
 
 	/**
@@ -192,8 +198,12 @@ public class CDate {
 		this.minute = minute;
 	}
 	
-	public static void main(String args[]){
-		CDate test = new CDate(2012, 12, 3, 14, 00);
-		System.out.println(test.getDayOfWeek());
+	public static void main(String args[]) throws ParseException{
+		CDate test1 = new CDate(2012, 12, 3, 14, 00);
+		CDate test2 = new CDate(2012, 5, 12, 14, 00);
+		CDate test3 = new CDate(2012, 7, 29, 14, 00);
+		System.out.println(test1.getDayOfWeek());
+		System.out.println(test2.getDayOfWeek());
+		System.out.println(test3.getDayOfWeek());
 	}
 }
