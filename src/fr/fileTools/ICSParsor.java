@@ -9,6 +9,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import net.fortuna.ical4j.data.CalendarBuilder;
@@ -30,7 +31,7 @@ public class ICSParsor{
     public ICSParsor(){
     }
     
-    public static void loadingEvent(String name, ArrayList<ICalEvent> iCalevents) throws FileNotFoundException, IOException, ParserException{
+    public static void loadingEvent(String name, HashMap<String,ICalEvent> iCalevents) throws FileNotFoundException, IOException, ParserException{
         int test = 0;
         String dtstart = "";
         String dtend = "";
@@ -79,11 +80,11 @@ public class ICSParsor{
             if (property.getName().equals("DESCRIPTION")){description = property.getValue();}        
 
             }
-            iCalevents.add(new ICalEvent(uid, module, location, typeCours ,description, new CDate(dtstart), new CDate(dtend)));
+            iCalevents.put(uid, new ICalEvent(uid, module, location, typeCours ,description, new CDate(dtstart), new CDate(dtend)));
         }
     }
     
     public static void main(String args[]) throws FileNotFoundException, IOException, ParserException{
-        loadingEvent("myEDT", new ArrayList<ICalEvent>());
+        loadingEvent("myEDT", new HashMap<String, ICalEvent>());
     }
 }

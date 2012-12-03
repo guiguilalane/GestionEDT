@@ -97,6 +97,13 @@ public class CDate {
 		return "" + year + " " + month + " " + day + " " + hour + " " + minute;
 	}
 
+	public String toDate(){
+		return day + "/" + month + "/" + year;
+	}
+	
+	public String toHour(){
+		return hour + ":" + minute;
+	}
 
 	/**
 	 * @return the year

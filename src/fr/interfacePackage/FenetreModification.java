@@ -18,7 +18,7 @@ public class FenetreModification extends FenetreEvenement{
 		this.lieuEv.setText("04");
 		this.categorieEv.setSelectedItem("TP");
 		this.descriptionEv.setText("04");
-		this.setVisible(true);
+		
 	}
 
 }

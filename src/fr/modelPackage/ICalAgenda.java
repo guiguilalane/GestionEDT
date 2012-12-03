@@ -1,6 +1,6 @@
 package fr.modelPackage;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 
 /**
@@ -9,33 +9,33 @@ import java.util.ArrayList;
  */
 public class ICalAgenda extends Agenda {
 
-	private ArrayList<ICalEvent> agenda;
+	private HashMap<String,ICalEvent> agenda;
 	
 	@Override
 	public void addEvent(Event event) {
-		agenda.add((ICalEvent) event);
+		agenda.put(event.getUID(), (ICalEvent) event);
 	}
 	
 	@Override
 	public void removeEvent(Event event) {
-		agenda.remove((ICalEvent) event);
+		agenda.remove(event.getUID());
 	}
 	
 	/**
 	 * Allocates a new <code>ICalAgenda</code> object and initialize it.
-	 * @see ArrayList
+	 * @see HashMap
 	 */
 	public ICalAgenda()
 	{
-		agenda = new ArrayList<ICalEvent>();
+		agenda = new HashMap<String,ICalEvent>();
 	}
 	
 	/**
 	 * Allocates a new <code>ICalAgenda</code> object and initialize it with the specified <code>agenda</code>.
 	 * @param agenda the specified agenda
-	 * @see ArrayList
+	 * @see HashMap
 	 */
-	public ICalAgenda(ArrayList<ICalEvent> agenda)
+	public ICalAgenda(HashMap<String,ICalEvent> agenda)
 	{
 		this.agenda = agenda;
 	}

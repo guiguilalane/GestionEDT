@@ -33,9 +33,7 @@ public class FenetreAjout extends FenetreEvenement{
 		recP.add(periodeW);
 		recP.add(periodeB);
 				
-		elements.add(recP);
-		this.setVisible(true);
-				
+		elements.add(recP);				
 	}
 
 }
