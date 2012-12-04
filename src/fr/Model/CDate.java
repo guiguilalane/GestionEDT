@@ -107,7 +107,7 @@ public class CDate {
 	public String toDate(){
 		String s = "";
 		s = String.format("%02d/%02d/%04d", day, month, year);
-		return day + "/" + month + "/" + year;
+		return s;
 	}
 	
 	public String toHour(){
@@ -210,6 +210,7 @@ public class CDate {
 		CDate test2 = new CDate(2012, 5, 12, 14, 00);
 		CDate test3 = new CDate(2012, 7, 29, 14, 00);
 		System.out.println(test2.toCalendarForm());
+		System.out.println(test2.toDate());
 		System.out.println(test1.getDayOfWeek());
 		System.out.println(test2.getDayOfWeek());
 		System.out.println(test3.getDayOfWeek());

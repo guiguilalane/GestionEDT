@@ -124,7 +124,7 @@ public class MainWindow extends JFrame {
 			textInformation.setText("---------- Informations ----------" + "\n" +
 					event.getCourseType().toString() + " - " + (String) event.getModule() + "\n" +
 					"Salle : " + (String) event.getClassRoom() + "\n" +
-					event.getdBegin().toString() + "\n" +
+					"Le " + event.getdBegin().toDate() + " de " + event.getdBegin().toHour() + " à " + event.getdEnd().toHour() + "\n" +
 					"Description : " + event.getRemarques() + "\n");
 		}
 
