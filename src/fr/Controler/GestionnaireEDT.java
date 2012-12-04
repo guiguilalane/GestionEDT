@@ -54,6 +54,16 @@ public class GestionnaireEDT {
 		iCalevents = new HashMap<String,ICalEvent>();
 		agendaICal = new ICalAgenda((HashMap<String,ICalEvent>) iCalevents);
 		factoryConnection = new ChandlerFactoryConnection();
+		//a enlever quand fenetre de connection integrée
+		try {
+			createConnection("plop", "plop");
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ObjectStoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -88,7 +98,8 @@ public class GestionnaireEDT {
 	}
 
 	public ICalEvent createEvent(String module, String salle, CategoriesCourse cat, String description, CDate begin, CDate end, boolean rec, boolean per){
-		//TODO GÔøΩnÔøΩrer uid + ajouter
+		//TODO faire un connection.createUid() pour récupérer un uid
+		//puis pour ajouter l'event sur le calendrier distant, dans ta fenetreAjout faire "gestionnaireEDT".addEvent() //regarde les paramètre de addEvent
 		String uid = "bloup";
 		if(rec){
 			if(per){

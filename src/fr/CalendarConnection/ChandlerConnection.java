@@ -53,7 +53,9 @@ public class ChandlerConnection extends Connection {
 	public ChandlerConnection(String usr, String mdp) throws MalformedURLException, ObjectStoreException {
 		url = new URL("https://hub.chandlerproject.org/pim");
 		store = new CalDavCalendarStore("-//Open Source Applications Foundation//NONSGML Chandler Server//EN", url, PathResolver.CHANDLER);
-		store.connect(usr, mdp.toCharArray());
+//		store.connect(usr, mdp.toCharArray());
+		//a enlever quand integration de la fenetre de connexion faite
+		store.connect("guiguilalane", "feuenlat1".toCharArray());
 		this.usr = usr;
 	}
 	
