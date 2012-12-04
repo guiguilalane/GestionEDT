@@ -47,6 +47,8 @@ public class MainWindow extends JFrame {
 	/* Items pour onglets */
 	private JMenuItem item1_1 = new JMenuItem("Créer un Calendrier");
 	private JMenuItem item1_2 = new JMenuItem("Charger Calendrier");
+	private JMenuItem item1_3 = new JMenuItem("Importer un ICS");
+	private JMenuItem item1_4 = new JMenuItem("Exporter en ICS");
 	private JMenuItem item2_1 = new JMenuItem("Equipe de Developpement");
 	/* Boutons */
 	private JButton addButton = new JButton("Ajouter");
@@ -62,15 +64,20 @@ public class MainWindow extends JFrame {
 	public MainWindow(){
 		this.setTitle("Logiciel de gestion d'emploi du temps");
 		this.setSize(900,550);
-		//Position the window on the center of the screen
 		this.setLocationRelativeTo(null);
-		//Termine le processus lorsqu'on clique sur la croix rouge
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  
 
+		//addind items to JBarMenu
 		this.tab1.add(item1_1);
 		this.tab1.add(item1_2);
+		this.tab1.add(item1_3);
+		this.tab1.add(item1_4);
 		this.tab2.add(item2_1);
-		item1_2.addActionListener(new loadingFile());
+		
+		item1_1.addActionListener(new connectToCalendar());
+		//item1_2.addActionListener();
+		item1_3.addActionListener(new loadingFile());
+		//item1_4.addActionListener();
 		item2_1.addActionListener(new ItemListener());
 
 		this.my_menuBar.add(tab1);
@@ -78,23 +85,22 @@ public class MainWindow extends JFrame {
 
 		this.setJMenuBar(my_menuBar);
 
-		//Action des boutons
+		//ActionListeners and JButtons
 		addButton.addActionListener(new AddEvent());
 		modifyButton.addActionListener(new ModifyEvent());
 		deleteButton.addActionListener(new DelRowListener());
 
 		//Les donnes du tableau
 		Object[][] donnees = {
-
 		};
 
 		//Les titres des colonnes
 		String titres[] = {"Date", "Horaires", "Matières"};
 
-		textInformation = new JTextArea("---------- Informations sur le Module ----------"/*,100,39*/);  
+		textInformation = new JTextArea("--- Informations sur le module selectionné dans le tableau de droite---");  
 		textInformation.setEditable(false);
 
-		my_panel1.add(textInformation);
+		//my_panel1.add(textInformation);
 		my_panel2.add(addButton);
 		my_panel2.add(modifyButton);
 		my_panel2.add(deleteButton);
@@ -106,11 +112,11 @@ public class MainWindow extends JFrame {
 		board.addMouseListener(new MyMouseListener());
 
 
-		my_panel2.add(new JScrollPane(board));
+		//my_panel2.add(new JScrollPane(board));
 
-		this.getContentPane().add(my_panel1, BorderLayout.EAST);
-		this.getContentPane().add(my_panel2, BorderLayout.SOUTH);
 		this.getContentPane().add(new JScrollPane(board), BorderLayout.WEST);
+		this.getContentPane().add(new JScrollPane(textInformation), BorderLayout.EAST);
+		this.getContentPane().add(my_panel2, BorderLayout.SOUTH);
 	}
 
 	class MyMouseListener implements MouseListener{
@@ -263,4 +269,3 @@ public class MainWindow extends JFrame {
 	}
 
 }
-
