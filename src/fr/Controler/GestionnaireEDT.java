@@ -5,13 +5,18 @@ package fr.Controler;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
+import net.fortuna.ical4j.connector.ObjectStoreException;
 import net.fortuna.ical4j.data.ParserException;
 import net.fortuna.ical4j.model.TimeZoneRegistry;
 import net.fortuna.ical4j.model.TimeZoneRegistryFactory;
+import fr.CalendarConnection.ChandlerFactoryConnection;
+import fr.CalendarConnection.Connection;
+import fr.CalendarConnection.FactoryConnection;
 import fr.Model.Agenda;
 import fr.Model.AgendaFactory;
 import fr.Model.AgendaICalFactory;
@@ -34,6 +39,10 @@ public class GestionnaireEDT {
 	private Agenda agendaICal;
 
 	private HashMap<String, ICalEvent> iCalevents;
+	
+	private FactoryConnection factoryConnection;
+	
+	private Connection connection;
 
 	private static int unique = 0;
 
@@ -44,6 +53,18 @@ public class GestionnaireEDT {
 		factoryICal = new AgendaICalFactory();
 		iCalevents = new HashMap<String,ICalEvent>();
 		agendaICal = new ICalAgenda((HashMap<String,ICalEvent>) iCalevents);
+		factoryConnection = new ChandlerFactoryConnection();
+	}
+	
+	/**
+	 * create a new connection with a remote calendar
+	 * @param usr the user identifier
+	 * @param mdp the user password
+	 * @throws MalformedURLException when the url is MalFormed
+	 * @throws ObjectStoreException when usr is not connected
+	 */
+	public void createConnection(String usr, String mdp) throws MalformedURLException, ObjectStoreException{
+		connection = factoryConnection.createFactoryConnection(usr, mdp);
 	}
 
 	/**

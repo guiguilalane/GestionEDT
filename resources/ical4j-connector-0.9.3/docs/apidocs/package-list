@@ -1,0 +1,7 @@
+net.fortuna.ical4j.connector
+net.fortuna.ical4j.connector.dav
+net.fortuna.ical4j.connector.dav.enums
+net.fortuna.ical4j.connector.dav.method
+net.fortuna.ical4j.connector.dav.property
+net.fortuna.ical4j.connector.event
+net.fortuna.ical4j.connector.jcr

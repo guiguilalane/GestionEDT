@@ -91,7 +91,7 @@ public class CDate {
 	 * 		<li> <code>ii</code> is the minute within the hour (0 through 59), as two decimal digits
 	 * 		<li> <code>ss</code> is the seconde within the minute (0 through 59), as two decimal digits
 	 * </ul>
-	 * @return a string representation if this date
+	 * @return a string representation of this date
 	 * @see String#format(String, Object...)
 	 */
 	public String toCalendarForm() {
