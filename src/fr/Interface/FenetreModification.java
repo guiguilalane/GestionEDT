@@ -1,4 +1,4 @@
-package fr.interfacePackage;
+package fr.Interface;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,13 +28,13 @@ public class FenetreModification extends FenetreEvenement{
 	class ModifyEvent implements ActionListener{
 		@Override 
 		public void actionPerformed(ActionEvent arg0){
-			// TODO Vérifier que les parametres sont corrects appeler une fonction
-			// Vérifier que les champs de date soient seulement des chiffres
+			// TODO VÔøΩrifier que les parametres sont corrects appeler une fonction
+			// VÔøΩrifier que les champs de date soient seulement des chiffres
 			// idem pour heure_deb et heure_fin
-			// Vérifier que le titre et la salle sont non vide
-			// TODO Modifier au modèle (HashMap) et Interface (board.model)
+			// VÔøΩrifier que le titre et la salle sont non vide
+			// TODO Modifier au modÔøΩle (HashMap) et Interface (board.model)
 			System.out.println("Modification OK");
-			// TODO fermer la fenêtre si tout est OK
+			// TODO fermer la fenÔøΩtre si tout est OK
 		}
 	}
 

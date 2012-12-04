@@ -1,4 +1,4 @@
-package fr.interfacePackage;
+package fr.Interface;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,11 +15,11 @@ import javax.swing.JTextField;
 import net.fortuna.ical4j.util.SimpleHostInfo;
 import net.fortuna.ical4j.util.UidGenerator;
 
-import fr.controlerPackage.GestionnaireEDT;
-import fr.interfacePackage.MainWindow.AddEvent;
-import fr.modelPackage.CDate;
-import fr.modelPackage.CategoriesCourse;
-import fr.modelPackage.ICalEvent;
+import fr.Controler.GestionnaireEDT;
+import fr.Interface.MainWindow.AddEvent;
+import fr.Model.CDate;
+import fr.Model.CategoriesCourse;
+import fr.Model.ICalEvent;
 import fr.utilities.MyModel.MyModel;
 
 
@@ -38,7 +38,7 @@ public class FenetreAjout extends FenetreEvenement{
 
 		gl.setRows(gl.getRows()+2);
 
-		// Parametre du champ Priodicit
+		// Parametre du champ Pï¿½riodicitï¿½
 		JLabel recLabel = new JLabel("Cet evenement est-il recurrrent ?");
 		JPanel recP = new JPanel();
 		rec.add(recY);
@@ -51,7 +51,7 @@ public class FenetreAjout extends FenetreEvenement{
 		recY.addActionListener(new ActiveRecurrence());
 		recN.addActionListener(new DesactiveRecurrence());
 
-		// Parametre du champ Priodicit
+		// Parametre du champ Pï¿½riodicitï¿½
 		JLabel perLabel = new JLabel("Recurrence sur:");
 		JLabel perMois = new JLabel("mois."); 
 		JPanel perP = new JPanel();
@@ -78,9 +78,9 @@ public class FenetreAjout extends FenetreEvenement{
 		@Override 
 		public void actionPerformed(ActionEvent arg0){
 			boolean incorrectEvent = true;
-			// Vrifier que les champs de date soient seulement des chiffres ---> Pour le moment renvoi une exception
+			// Vï¿½rifier que les champs de date soient seulement des chiffres ---> Pour le moment renvoi une exception
 
-			// TODO Crer un URI automatiquement --> Et rcurrence
+			// TODO Crï¿½er un URI automatiquement --> Et rï¿½currence
 			// TODO Ajouter Interface (board.model)
 
 			// Creation des differentes informations d'un evenement
@@ -91,8 +91,8 @@ public class FenetreAjout extends FenetreEvenement{
 			String des = descriptionEv.getText();
 			CDate begin = new CDate(Integer.parseInt(dateAnnee.getText()),Integer.parseInt(dateMois.getText()),Integer.parseInt(dateJour.getText()), Integer.parseInt(heureDebHeure.getText()),Integer.parseInt(heureDebMinute.getText()));
 			CDate end = new CDate(Integer.parseInt(dateAnnee.getText()),Integer.parseInt(dateMois.getText()),Integer.parseInt(dateJour.getText()), Integer.parseInt(heureFinHeure.getText()),Integer.parseInt(heureFinMinute.getText()));
-			boolean rec = recY.isSelected(); // Vrai si on a de la rcurrence
-			boolean per = periodeW.isSelected(); // Vrai si la priode est weekly
+			boolean rec = recY.isSelected(); // Vrai si on a de la rï¿½currence
+			boolean per = periodeW.isSelected(); // Vrai si la pï¿½riode est weekly
 			int mois = Integer.parseInt(nbMois.getText());
 			ICalEvent newEvent = mon_gestionnaire.createEvent(module, salle, cat, des, begin, end, rec, per);
 
@@ -105,7 +105,7 @@ public class FenetreAjout extends FenetreEvenement{
 				// Ajout dans l'interface
 				//MyModel modelTemp = (MyModel) board.getModel();
 
-				// On ferme la fentre si tout est bon
+				// On ferme la fenï¿½tre si tout est bon
 				close();
 			}
 		}

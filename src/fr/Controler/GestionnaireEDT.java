@@ -1,26 +1,26 @@
 /**
  * 
  */
-package fr.controlerPackage;
+package fr.Controler;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 
 import net.fortuna.ical4j.data.ParserException;
+import fr.Model.Agenda;
+import fr.Model.AgendaFactory;
+import fr.Model.AgendaICalFactory;
+import fr.Model.CDate;
+import fr.Model.CategoriesCourse;
+import fr.Model.ICalAgenda;
+import fr.Model.ICalEvent;
 import fr.fileTools.ICSParsor;
-import fr.modelPackage.Agenda;
-import fr.modelPackage.AgendaFactory;
-import fr.modelPackage.AgendaICalFactory;
-import fr.modelPackage.CDate;
-import fr.modelPackage.CategoriesCourse;
-import fr.modelPackage.ICalAgenda;
-import fr.modelPackage.ICalEvent;
 
 
 
 /**
- * @author Florian FAGNIEZ - Noémie RULLIER - Guillaume COUTABLE
+ * @author Florian FAGNIEZ - Noï¿½mie RULLIER - Guillaume COUTABLE
  *
  */
 public class GestionnaireEDT {
@@ -63,7 +63,7 @@ public class GestionnaireEDT {
 	}
 	
 	public ICalEvent createEvent(String module, String salle, CategoriesCourse cat, String description, CDate begin, CDate end, boolean rec, boolean per){
-		//TODO GŽnŽrer uid + ajouter
+		//TODO Gï¿½nï¿½rer uid + ajouter
 		String uid = "bloup";
 		if(rec){
 			if(per){

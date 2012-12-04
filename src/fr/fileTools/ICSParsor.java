@@ -17,10 +17,10 @@ import net.fortuna.ical4j.data.ParserException;
 import net.fortuna.ical4j.model.Calendar;
 import net.fortuna.ical4j.model.Component;
 import net.fortuna.ical4j.model.Property;
-import fr.modelPackage.CDate;
-import fr.modelPackage.CategoriesCourse;
-import fr.modelPackage.Event;
-import fr.modelPackage.ICalEvent;
+import fr.Model.CDate;
+import fr.Model.CategoriesCourse;
+import fr.Model.Event;
+import fr.Model.ICalEvent;
 
 /**
  *

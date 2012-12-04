@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.interfacePackage;
+package fr.Interface;
 
 /**
  *
@@ -32,8 +32,8 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 
 import net.fortuna.ical4j.data.ParserException;
-import fr.controlerPackage.GestionnaireEDT;
-import fr.modelPackage.ICalEvent;
+import fr.Controler.GestionnaireEDT;
+import fr.Model.ICalEvent;
 import fr.utilities.MyModel.MyModel;
 
 public class MainWindow extends JFrame {

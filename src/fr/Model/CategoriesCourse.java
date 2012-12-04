@@ -1,7 +1,7 @@
 /**
  * 
  */
-package fr.modelPackage;
+package fr.Model;
 
 
 /**

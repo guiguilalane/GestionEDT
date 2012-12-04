@@ -1,4 +1,4 @@
-package fr.modelPackage;
+package fr.Model;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -46,9 +46,9 @@ public class ICalEvent extends Event {
 			// On regarde si les dates et heures fournies sont correctes
 		  cDeb.getTime();
 		  cFin.getTime();
-		  // On vŽrifie que la date de dŽbut ainsi que l'heure de dŽbut est infŽrieur ˆ la date de fin ainsi que l'heure de fin
+		  // On vï¿½rifie que la date de dï¿½but ainsi que l'heure de dï¿½but est infï¿½rieur ï¿½ la date de fin ainsi que l'heure de fin
 		  coherenceDebFin = cDeb.compareTo(cFin);
-		  // On vŽrifie si la date de dŽbut et l'heure de dŽbut est supŽrieur ou Žgale ˆ l'heure actuelle
+		  // On vï¿½rifie si la date de dï¿½but et l'heure de dï¿½but est supï¿½rieur ou ï¿½gale ï¿½ l'heure actuelle
 		  coherenceDebActuelle = cDeb.compareTo(cActuelle);
 		  return (this.module.equals("") || this.classRoom.equals("") || coherenceDebFin!=(-1) || coherenceDebActuelle==(-1));
 		}
