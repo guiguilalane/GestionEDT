@@ -187,7 +187,7 @@ public class MainWindow extends JFrame {
 		//Redefintion de la methode actionPerformed()
 		@Override
 		public void actionPerformed(ActionEvent arg0) {   
-			FenetreEvenement ev = new FenetreAjout(null, true);
+			FenetreEvenement ev = new FenetreAjout(null, true, board);
 			ev.setVisible(true);
 		}
 	}

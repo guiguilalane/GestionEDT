@@ -5,6 +5,7 @@ package fr.Controler;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import net.fortuna.ical4j.data.ParserException;
@@ -20,7 +21,7 @@ import fr.fileTools.ICSParsor;
 
 
 /**
- * @author Florian FAGNIEZ - No�mie RULLIER - Guillaume COUTABLE
+ * @author Florian FAGNIEZ - NoÔøΩmie RULLIER - Guillaume COUTABLE
  *
  */
 public class GestionnaireEDT {
@@ -61,9 +62,9 @@ public class GestionnaireEDT {
 	public void remplirList(String name) throws FileNotFoundException, IOException, ParserException{
 		ICSParsor.loadingEvent(name, iCalevents);            
 	}
-	
+
 	public ICalEvent createEvent(String module, String salle, CategoriesCourse cat, String description, CDate begin, CDate end, boolean rec, boolean per){
-		//TODO G�n�rer uid + ajouter
+		//TODO GÔøΩnÔøΩrer uid + ajouter
 		String uid = "bloup";
 		if(rec){
 			if(per){
@@ -75,9 +76,19 @@ public class GestionnaireEDT {
 		}
 		return new ICalEvent(uid, module, salle,cat,description,begin,end);
 	}
-	
-	public void addEvent(ICalEvent event, int mois){
+
+	public ArrayList<ICalEvent> addEvent(ICalEvent event, int mois){
+		ArrayList<ICalEvent> listRec = new ArrayList();
+		if(event.getUID().charAt(0)=='R'){
+			if(event.getUID().charAt(1)=='W'){
+				
+			}
+			else if(event.getUID().charAt(1)=='B'){
+
+			}
+		}
 		this.getICalEvents().put(event.getUID(), event);
+		return listRec;
 	}
 
 	public static void main(String args[]) throws FileNotFoundException, ParserException, IOException{
@@ -86,14 +97,14 @@ public class GestionnaireEDT {
 		for (ICalEvent e : myEDT.iCalevents.values()){
 			System.out.println(e.getUID());
 		}
-//		for(int i=0; i<myEDT.iCalevents.size();i++){
-//			System.out.println(myEDT.iCalevents. .get(i).getUID());
-//			System.out.println(myEDT.iCalevents.get(i).getCourseType());
-//			System.out.println(myEDT.iCalevents.get(i).getdBegin().toString());
-//			System.out.println(myEDT.iCalevents.get(i).getdEnd().toString());
-//			System.out.println(myEDT.iCalevents.get(i).getModule());
-//			System.out.println(myEDT.iCalevents.get(i).getRemarques());
-//			System.out.println(myEDT.iCalevents.get(i).getClass());                
-//		}
+		//		for(int i=0; i<myEDT.iCalevents.size();i++){
+		//			System.out.println(myEDT.iCalevents. .get(i).getUID());
+		//			System.out.println(myEDT.iCalevents.get(i).getCourseType());
+		//			System.out.println(myEDT.iCalevents.get(i).getdBegin().toString());
+		//			System.out.println(myEDT.iCalevents.get(i).getdEnd().toString());
+		//			System.out.println(myEDT.iCalevents.get(i).getModule());
+		//			System.out.println(myEDT.iCalevents.get(i).getRemarques());
+		//			System.out.println(myEDT.iCalevents.get(i).getClass());                
+		//		}
 	}
 }

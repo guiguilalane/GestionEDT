@@ -50,7 +50,7 @@ public class ICalEvent extends Event {
 		  coherenceDebFin = cDeb.compareTo(cFin);
 		  // On v�rifie si la date de d�but et l'heure de d�but est sup�rieur ou �gale � l'heure actuelle
 		  coherenceDebActuelle = cDeb.compareTo(cActuelle);
-		  return (this.module.equals("") || this.classRoom.equals("") || coherenceDebFin!=(-1) || coherenceDebActuelle==(-1));
+		  return (this.module.equals("") || coherenceDebFin!=(-1) || coherenceDebActuelle==(-1));
 		}
 		catch(IllegalArgumentException iAE){
 		  return true;

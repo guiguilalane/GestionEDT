@@ -2,21 +2,17 @@ package fr.Interface;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashMap;
 
 import javax.swing.ButtonGroup;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 
-import net.fortuna.ical4j.util.SimpleHostInfo;
-import net.fortuna.ical4j.util.UidGenerator;
-
 import fr.Controler.GestionnaireEDT;
-import fr.Interface.MainWindow.AddEvent;
 import fr.Model.CDate;
 import fr.Model.CategoriesCourse;
 import fr.Model.ICalEvent;
@@ -32,9 +28,11 @@ public class FenetreAjout extends FenetreEvenement{
 	private ButtonGroup periode = new ButtonGroup();
 	private JRadioButton periodeW = new JRadioButton("Weekly");
 	private JRadioButton periodeB = new JRadioButton("Bi-weekly");
+	private JTable board;
 
-	public FenetreAjout(JFrame parent, boolean modal) {
+	public FenetreAjout(JFrame parent, boolean modal, JTable boardP) {
 		super(parent, "Ajouter votre evenement", modal);
+		this.board=boardP;
 
 		gl.setRows(gl.getRows()+2);
 
@@ -72,41 +70,59 @@ public class FenetreAjout extends FenetreEvenement{
 	public void close(){
 		this.setVisible(false);
 	}
-	
+
 	class AddEvent implements ActionListener{
 		private GestionnaireEDT mon_gestionnaire = GestionnaireEDT.getInstance();
+
+
+
 		@Override 
 		public void actionPerformed(ActionEvent arg0){
 			boolean incorrectEvent = true;
+			JOptionPane lettre;
+			CDate begin;
+			CDate end;
 			// Vï¿½rifier que les champs de date soient seulement des chiffres ---> Pour le moment renvoi une exception
 
 			// TODO Crï¿½er un URI automatiquement --> Et rï¿½currence
 			// TODO Ajouter Interface (board.model)
+			// Ajout rŽcurrence
 
-			// Creation des differentes informations d'un evenement
-			String uid = "bloup";
-			String module = titreEv.getText();
-			String salle = lieuEv.getText();
-			CategoriesCourse cat = CategoriesCourse.fromString(categorieEv.getSelectedItem().toString());
-			String des = descriptionEv.getText();
-			CDate begin = new CDate(Integer.parseInt(dateAnnee.getText()),Integer.parseInt(dateMois.getText()),Integer.parseInt(dateJour.getText()), Integer.parseInt(heureDebHeure.getText()),Integer.parseInt(heureDebMinute.getText()));
-			CDate end = new CDate(Integer.parseInt(dateAnnee.getText()),Integer.parseInt(dateMois.getText()),Integer.parseInt(dateJour.getText()), Integer.parseInt(heureFinHeure.getText()),Integer.parseInt(heureFinMinute.getText()));
-			boolean rec = recY.isSelected(); // Vrai si on a de la rï¿½currence
-			boolean per = periodeW.isSelected(); // Vrai si la pï¿½riode est weekly
-			int mois = Integer.parseInt(nbMois.getText());
-			ICalEvent newEvent = mon_gestionnaire.createEvent(module, salle, cat, des, begin, end, rec, per);
+			try{
+				// Creation des differentes informations d'un evenement
+				String uid = "bloup";
+				String module = titreEv.getText();
+				String salle = lieuEv.getText();
+				CategoriesCourse cat = CategoriesCourse.fromString(categorieEv.getSelectedItem().toString());
+				String des = descriptionEv.getText();
 
-			incorrectEvent = newEvent.incorrectEvenement();
-			if (!incorrectEvent){
+				begin = new CDate(Integer.parseInt(dateAnnee.getText()),Integer.parseInt(dateMois.getText()),Integer.parseInt(dateJour.getText()), Integer.parseInt(heureDebHeure.getText()),Integer.parseInt(heureDebMinute.getText()));
+				end = new CDate(Integer.parseInt(dateAnnee.getText()),Integer.parseInt(dateMois.getText()),Integer.parseInt(dateJour.getText()), Integer.parseInt(heureFinHeure.getText()),Integer.parseInt(heureFinMinute.getText()));
 
-				// Ajout dans le modele
-				mon_gestionnaire.addEvent(newEvent, mois);
+				boolean rec = recY.isSelected(); // Vrai si on a de la rï¿½currence
+				boolean per = periodeW.isSelected(); // Vrai si la pï¿½riode est weekly
+				int mois = Integer.parseInt(nbMois.getText());
+				ICalEvent newEvent = mon_gestionnaire.createEvent(module, salle, cat, des, begin, end, rec, per);
 
-				// Ajout dans l'interface
-				//MyModel modelTemp = (MyModel) board.getModel();
+				incorrectEvent = newEvent.incorrectEvenement();
+				if (!incorrectEvent){
 
-				// On ferme la fenï¿½tre si tout est bon
-				close();
+					// Ajout dans le modele
+					mon_gestionnaire.addEvent(newEvent, mois);
+
+					// Ajout dans l'interface
+					MyModel modelTemp = (MyModel) board.getModel();
+					String heure = newEvent.getdBegin().toHour()+"-"+newEvent.getdEnd().toHour();
+					Object[] contenu = {newEvent.getdBegin().toDate(), heure, module, newEvent.getUID()}; 
+					modelTemp.addRow(contenu);
+
+					// On ferme la fenï¿½tre si tout est bon
+					close();
+				}
+			}
+			catch (java.lang.NumberFormatException e){
+				lettre = new JOptionPane();
+				lettre.showMessageDialog(null, "Merci de ne rentrer que des chiffres pour la date et les heures !!!", "Attention", JOptionPane.WARNING_MESSAGE);
 			}
 		}
 	}
