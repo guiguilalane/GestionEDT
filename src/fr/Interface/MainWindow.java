@@ -194,8 +194,11 @@ public class MainWindow extends JFrame {
 	class ModifyEvent implements ActionListener{
 		//Redefintion de la methode actionPerformed()
 		@Override
-		public void actionPerformed(ActionEvent arg0) {   
-			FenetreEvenement ev = new FenetreModification(null, true);
+		public void actionPerformed(ActionEvent arg0) {
+			MyModel modelTemp = (MyModel)board.getModel();
+			HashMap<String,ICalEvent> listTemp = mon_gestionnaire.getICalEvents();
+			ICalEvent event = listTemp.get(modelTemp.getValueAt(board.getSelectedRow(), 3));
+			FenetreEvenement ev = new FenetreModification(null, true, board, event);
 			ev.setVisible(true);
 		}
 	}

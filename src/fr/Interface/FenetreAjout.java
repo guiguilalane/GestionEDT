@@ -75,8 +75,6 @@ public class FenetreAjout extends FenetreEvenement{
 	class AddEvent implements ActionListener{
 		private GestionnaireEDT mon_gestionnaire = GestionnaireEDT.getInstance();
 
-
-
 		@Override 
 		public void actionPerformed(ActionEvent arg0){
 			boolean incorrectEvent = true;
@@ -84,15 +82,10 @@ public class FenetreAjout extends FenetreEvenement{
 			CDate begin;
 			CDate end;
 			ArrayList<ICalEvent> liste;
-			// V�rifier que les champs de date soient seulement des chiffres ---> Pour le moment renvoi une exception
-
 			// TODO Cr�er un URI automatiquement --> Et r�currence
-			// TODO Ajouter Interface (board.model)
-			// Ajout r�currence
 
 			try{
 				// Creation des differentes informations d'un evenement
-				String uid = "bloup";
 				String module = titreEv.getText();
 				String salle = lieuEv.getText();
 				CategoriesCourse cat = CategoriesCourse.fromString(categorieEv.getSelectedItem().toString());
@@ -120,7 +113,7 @@ public class FenetreAjout extends FenetreEvenement{
 						modelTemp.addRow(contenu);
 					}
 
-					// On ferme la fen�tre si tout est bon
+					// On ferme la fenetre si tout est bon
 					close();
 				}
 			}

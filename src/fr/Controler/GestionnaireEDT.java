@@ -79,6 +79,10 @@ public class GestionnaireEDT {
 		}
 		return new ICalEvent(uid, module, salle,cat,description,begin,end);
 	}
+	
+	public void modifyEvent(ICalEvent event){
+
+	}
 
 	public ArrayList<ICalEvent> addEvent(ICalEvent event, int mois){
 		ArrayList<ICalEvent> listRec = new ArrayList();
