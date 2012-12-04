@@ -96,7 +96,7 @@ public class CDate {
 	 */
 	public String toCalendarForm() {
 		String s = "";
-		s = String.format("%4d%2d%2dT%2d%2d00Z", year, month, day, hour, minute);
+		s = String.format("%04d%02d%02dT%02d%02d00Z", year, month, day, hour, minute);
 		return s;
 	}
 
@@ -106,13 +106,13 @@ public class CDate {
 
 	public String toDate(){
 		String s = "";
-		s = String.format("%2d/%2d/%4d", day, month, year);
+		s = String.format("%02d/%02d/%04d", day, month, year);
 		return day + "/" + month + "/" + year;
 	}
 	
 	public String toHour(){
 		String s = "";
-		s = String.format("%2d:%2d", hour, minute);
+		s = String.format("%02d:%02d", hour, minute);
 		return s;
 	}
 
@@ -209,6 +209,7 @@ public class CDate {
 		CDate test1 = new CDate(2012, 12, 3, 14, 00);
 		CDate test2 = new CDate(2012, 5, 12, 14, 00);
 		CDate test3 = new CDate(2012, 7, 29, 14, 00);
+		System.out.println(test2.toCalendarForm());
 		System.out.println(test1.getDayOfWeek());
 		System.out.println(test2.getDayOfWeek());
 		System.out.println(test3.getDayOfWeek());
