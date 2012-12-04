@@ -1,5 +1,8 @@
 package fr.interfacePackage;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JFrame;
 
 
@@ -19,6 +22,20 @@ public class FenetreModification extends FenetreEvenement{
 		this.categorieEv.setSelectedItem("TP");
 		this.descriptionEv.setText("04");
 		
+		validation.addActionListener(new ModifyEvent());
+	}
+	
+	class ModifyEvent implements ActionListener{
+		@Override 
+		public void actionPerformed(ActionEvent arg0){
+			// TODO Vérifier que les parametres sont corrects appeler une fonction
+			// Vérifier que les champs de date soient seulement des chiffres
+			// idem pour heure_deb et heure_fin
+			// Vérifier que le titre et la salle sont non vide
+			// TODO Modifier au modèle (HashMap) et Interface (board.model)
+			System.out.println("Modification OK");
+			// TODO fermer la fenêtre si tout est OK
+		}
 	}
 
 }

@@ -16,6 +16,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -101,7 +102,7 @@ public class MainWindow extends JFrame {
 		MyModel model = new MyModel(donnees, titres);
 		board = new JTable(model);
 
-		//Définition d'un nouveau MouseListener
+		//Definition d'un nouveau MouseListener
 		board.addMouseListener(new MyMouseListener());
 
 
@@ -113,7 +114,7 @@ public class MainWindow extends JFrame {
 	}
 
 	class MyMouseListener implements MouseListener{
-		//Redéfinition d'un MouseListener
+		//Redefinition d'un MouseListener
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			int selectedRow = board.getSelectedRow();
@@ -121,10 +122,10 @@ public class MainWindow extends JFrame {
 			HashMap<String,ICalEvent> listTemp = mon_gestionnaire.getICalEvents();
 			ICalEvent event = listTemp.get(modelTemp.getValueAt(selectedRow, 3));
 			textInformation.setText("---------- Informations ----------" + "\n" +
-			event.getCourseType().toString() + " - " + (String) event.getModule() + "\n" +
-			"Salle : " + (String) event.getClassRoom() + "\n" +
-			event.getdBegin().toString() + "\n" +
-			"Description : " + event.getRemarques());
+					event.getCourseType().toString() + " - " + (String) event.getModule() + "\n" +
+					"Salle : " + (String) event.getClassRoom() + "\n" +
+					event.getdBegin().toString() + "\n" +
+					"Description : " + event.getRemarques() + "\n");
 		}
 
 		@Override
@@ -172,18 +173,18 @@ public class MainWindow extends JFrame {
 			}          
 		}
 	}
-	
+
 	class connectToCalendar implements ActionListener{
 		@Override 
 		public void actionPerformed(ActionEvent arg0){
-		ConnectionWindow connecWind = new ConnectionWindow();
-		connecWind.setVisible(true);
+			ConnectionWindow connecWind = new ConnectionWindow();
+			connecWind.setVisible(true);
 		}
 	}
-	
-	
+
+
 	class AddEvent implements ActionListener{
-		//Redéfintion de la méthode actionPerformed()
+		//Redefintion de la methode actionPerformed()
 		@Override
 		public void actionPerformed(ActionEvent arg0) {   
 			FenetreEvenement ev = new FenetreAjout(null, true);
@@ -191,7 +192,7 @@ public class MainWindow extends JFrame {
 		}
 	}
 	class ModifyEvent implements ActionListener{
-		//Redéfintion de la méthode actionPerformed()
+		//Redefintion de la methode actionPerformed()
 		@Override
 		public void actionPerformed(ActionEvent arg0) {   
 			FenetreEvenement ev = new FenetreModification(null, true);
@@ -201,9 +202,9 @@ public class MainWindow extends JFrame {
 
 
 	class DelRowListener implements ActionListener{
-		//Redéfintion de la méthode actionPerformed()
+		//Redefintion de la methode actionPerformed()
 		@Override
-		public void actionPerformed(ActionEvent arg0) {   
+		public void actionPerformed(ActionEvent arg0){   
 			int selectedRow = board.getSelectedRow(); 
 			MyModel modelTemp = (MyModel)board.getModel();
 			HashMap<String,ICalEvent> listTemp = mon_gestionnaire.getICalEvents();
@@ -212,12 +213,27 @@ public class MainWindow extends JFrame {
 			if (rec == '\0'){
 				listTemp.remove(modelTemp.getValueAt(selectedRow, 3));
 			}
-			// Si l'événement est récurrent 
+			// Si l'evenement est recurrent 
 			else if(rec == 'R'){
 				for (ICalEvent e : mon_gestionnaire.getICalEvents().values()){
-					if (e.getdBegin().equals(event.getdBegin()) && e.getdEnd().equals(event.getdEnd()) && e.getModule().equals(event.getModule())){
-						listTemp.remove(e.getUID());
+					try {
+						e.getdBegin().getDayOfWeek();
+						event.getdBegin().getDayOfWeek();
+						e.getdEnd().getDayOfWeek();
+						event.getdEnd().getDayOfWeek();
+						if (e.getdBegin().getDayOfWeek()==event.getdBegin().getDayOfWeek() &&
+								e.getdBegin().getHour()==event.getdBegin().getHour() && 
+								e.getdBegin().getMinute()==event.getdBegin().getMinute() &&
+								e.getdEnd().getDayOfWeek()==event.getdEnd().getDayOfWeek() &&
+								e.getdEnd().getHour()==event.getdEnd().getHour() &&
+								e.getdEnd().getMinute()==event.getdEnd().getMinute() && 
+								e.getModule().equals(event.getModule())){
+							listTemp.remove(e.getUID());
+						}
 					}
+					catch (Exception execption){
+					}
+
 				}
 			}
 			modelTemp.removeRow(selectedRow);
@@ -225,10 +241,10 @@ public class MainWindow extends JFrame {
 	}
 
 	class ItemListener implements ActionListener{
-		//Redéfinition de la méthode actionPerformed()
+		//Redefinition de la methode actionPerformed()
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			JFrame fenetreDev = new JFrame("Equipe de développement");
+			JFrame fenetreDev = new JFrame("Equipe de developpement");
 			fenetreDev.setSize(300,100);
 			fenetreDev.setLocationRelativeTo(null);
 			JTextArea textArea = new JTextArea("Ce logiciel à été développé par : Florian FAGNIEZ,\nGuillaume Coutable et Noémie RULLIER \nM1 ALMA - TPA");

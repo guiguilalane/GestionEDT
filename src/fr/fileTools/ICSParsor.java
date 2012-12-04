@@ -72,7 +72,7 @@ public class ICSParsor{
                 if (property.getValue().contains("TD")){typeCours =  CategoriesCourse.TD ; module = property.getValue();}
                 if (property.getValue().contains("CC") || (property).getValue().contains("CONTROLE CONTINU")){typeCours =  CategoriesCourse.CC ; module = property.getValue();}
                 if (property.getValue().contains("TP")){typeCours =  CategoriesCourse.TP ; module = property.getValue();}
-                if (property.getValue().contains("CCTD")){typeCours =  CategoriesCourse.CCTD ; module = property.getValue();}
+                if (property.getValue().contains("CCTD")){typeCours =  CategoriesCourse.CCTP ; module = property.getValue();}
                 if (property.getValue().contains("RENDUPROJET")){typeCours =  CategoriesCourse.RENDUPROJET ; module = property.getValue();}
                 if (property.getValue().contains("EXAMEN")){typeCours =  CategoriesCourse.EXAMEN ; module = property.getValue();}
             }
