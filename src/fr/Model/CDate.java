@@ -105,11 +105,15 @@ public class CDate {
 	}
 
 	public String toDate(){
+		String s = "";
+		s = String.format("%2d/%2d/%4d", day, month, year);
 		return day + "/" + month + "/" + year;
 	}
 	
 	public String toHour(){
-		return hour + ":" + minute;
+		String s = "";
+		s = String.format("%2d:%2d", hour, minute);
+		return s;
 	}
 
 	/**
