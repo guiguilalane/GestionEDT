@@ -236,7 +236,7 @@ public class GestionnaireEDT extends Observable{
 	
 	public static void main(String args[]) throws FileNotFoundException, ParserException, IOException{
 		GestionnaireEDT myEDT = new GestionnaireEDT();
-		myEDT.remplirList("myEDT");
+		myEDT.remplirList("myEDT.ics");
 		for (ICalEvent e : myEDT.iCalevents.values()){
 			System.out.println(e.getUID());
 		}

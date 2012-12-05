@@ -41,7 +41,7 @@ public class ICSParsor{
 		String location = "";
 		String description = "";
 
-		String fileName = name + ".ics";
+		String fileName = name;
 
 		/* Parsing du fichier ICS */
 		FileInputStream fin = new FileInputStream(fileName);
