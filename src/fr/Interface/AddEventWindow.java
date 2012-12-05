@@ -39,7 +39,7 @@ public class AddEventWindow extends EventWindow{
 
 		gl.setRows(gl.getRows()+2);
 
-		// Parametre du champ P�riodicit�
+		// Parametre du champ Périodicit
 		JLabel recLabel = new JLabel("Cet evenement est-il recurrrent ?");
 		JPanel recP = new JPanel();
 		rec.add(recY);

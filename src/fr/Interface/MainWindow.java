@@ -86,7 +86,8 @@ public class MainWindow extends JFrame {
 		this.tab2.add(item2_1);
 		
 		item1_1.addActionListener(new connectToCalendar());
-		item1_2.addActionListener(new SyncronizeWithCalendar());
+		item1_2.addActionListener(new connectForLoading());
+		//item1_2.addActionListener(new SyncronizeWithCalendar());
 		item1_3.addActionListener(new loadingFile());
 		//item1_4.addActionListener();
 		item2_1.addActionListener(new ItemListener());
@@ -195,24 +196,6 @@ public class MainWindow extends JFrame {
 		}
 	}
 	
-	class SyncronizeWithCalendar implements ActionListener{
-		@Override 
-		public void actionPerformed(ActionEvent arg0){
-			mon_gestionnaire.remplirList();
-			MyModel modelTemp = (MyModel)board.getModel();
-			board.removeAll();
-			for (ICalEvent e : mon_gestionnaire.getICalEvents().values()){
-				String date = e.getdBegin().toDate();
-				String hour = e.getdBegin().toHour() + "-" + e.getdEnd().toHour();
-				String module = e.getModule();
-				String uid = e.getUID();
-				Object[] contenu = {date, hour, module,uid}; 
-				modelTemp.addRow(contenu); 	
-			}  
-			addButton.setEnabled(true);
-		}
-	}
-
 	class connectToCalendar implements ActionListener{
 		@Override 
 		public void actionPerformed(ActionEvent arg0){
@@ -231,6 +214,33 @@ public class MainWindow extends JFrame {
 			ev.setVisible(true);
 		}
 	}
+	
+	class connectForLoading implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			LoadCalendarWindow ev = new LoadCalendarWindow();
+			ev.setVisible(true);
+		}
+	}
+	
+	class SyncronizeWithCalendar implements ActionListener{
+		@Override 
+		public void actionPerformed(ActionEvent arg0){
+			mon_gestionnaire.remplirList();
+			MyModel modelTemp = (MyModel)board.getModel();
+			board.removeAll();
+			for (ICalEvent e : mon_gestionnaire.getICalEvents().values()){
+				String date = e.getdBegin().toDate();
+				String hour = e.getdBegin().toHour() + "-" + e.getdEnd().toHour();
+				String module = e.getModule();
+				String uid = e.getUID();
+				Object[] contenu = {date, hour, module,uid}; 
+				modelTemp.addRow(contenu); 	
+			}  
+			addButton.setEnabled(true);
+		}
+	}
+	
 	class ModifyEvent implements ActionListener{
 		//Redefintion de la methode actionPerformed()
 		@Override
