@@ -2,7 +2,6 @@ package fr.Interface;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.MalformedURLException;
@@ -15,10 +14,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
-import org.apache.jackrabbit.webdav.DavException;
-
 import net.fortuna.ical4j.connector.ObjectStoreException;
-
 import fr.Controler.GestionnaireEDT;
 import fr.utilities.MyModel;
 
@@ -30,13 +26,13 @@ public class CreateCalendarWindow extends JFrame {
 	
 	private JPanel container = new JPanel();
 	
-	private JTextField uRL = new JTextField(40);
-	private JTextField description = new JTextField(40);
+//	private JTextField uRL = new JTextField(40);
+	private JTextField description = new JTextField(30);
 	private JTextField calendarName = new JTextField(40);
 	private JTextField userName = new JTextField(40);
 	private JPasswordField userPwd = new JPasswordField(40);
 	
-	private JLabel labelURL;
+//	private JLabel labelURL;
 	private JLabel labelDescription;
 	private JLabel labelCalendarName;
 	private JLabel labelUserName;
@@ -57,7 +53,7 @@ public class CreateCalendarWindow extends JFrame {
 		this.parent = (MainWindow) parent;
 		this.board = board;
 		
-		this.setSize(650, 280);
+		this.setSize(650, 240);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		this.setTitle("Construire un calendrier");
@@ -65,15 +61,15 @@ public class CreateCalendarWindow extends JFrame {
 	    container.setLayout(new BorderLayout());
 	    JPanel top = new JPanel();
 		
-		labelURL = new JLabel("URL : ");
+//		labelURL = new JLabel("URL : ");
 		labelDescription = new JLabel("Description de l'agenda : ");
 		labelCalendarName = new JLabel("Nom de l'agenda : ");
 		labelUserName = new JLabel("Nom utilisateur : ");
 		labelPwd = new JLabel("Password : ");
 		
-		JPanel panelURL = new JPanel();
-		panelURL.add(labelURL);
-		panelURL.add(uRL);
+//		JPanel panelURL = new JPanel();
+//		panelURL.add(labelURL);
+//		panelURL.add(uRL);
 		
 		JPanel panelDescription = new JPanel();
 		panelDescription.add(labelDescription);
@@ -93,7 +89,7 @@ public class CreateCalendarWindow extends JFrame {
 		
 		validateButton = new JButton("Valider");
 		
-		top.add(panelURL);
+//		top.add(panelURL);
 		top.add(panelDescription);
 		top.add(panelCalendarName);
 		top.add(panelUserName);

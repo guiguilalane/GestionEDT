@@ -31,7 +31,7 @@ public class LoadCalendarWindow extends JFrame {
 	private JPanel container = new JPanel();
 
 	private JTextField uRL = new JTextField(40);
-	private JTextField userName = new JTextField(40);
+	private JTextField userName = new JTextField(30);
 	private JPasswordField userPwd = new JPasswordField(40);
 
 	private JLabel labelURL;
