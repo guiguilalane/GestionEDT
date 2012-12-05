@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -22,7 +23,7 @@ import fr.utilities.MyModel.MyModel;
 
 public class FenetreAjout extends FenetreEvenement{
 
-	private JTextField nbMois = new JTextField("0",2);
+	private JTextField nbMois = new JTextField("1",2);
 	private ButtonGroup rec = new ButtonGroup();
 	private JRadioButton recY = new JRadioButton("Yes");
 	private JRadioButton recN = new JRadioButton("No");
@@ -30,6 +31,7 @@ public class FenetreAjout extends FenetreEvenement{
 	private JRadioButton periodeW = new JRadioButton("Weekly");
 	private JRadioButton periodeB = new JRadioButton("Bi-weekly");
 	private JTable board;
+	private ImageIcon stop = new ImageIcon("resources/stop.png");
 
 	public FenetreAjout(JFrame parent, boolean modal, JTable boardP) {
 		super(parent, "Ajouter votre evenement", modal);
@@ -42,7 +44,7 @@ public class FenetreAjout extends FenetreEvenement{
 		JPanel recP = new JPanel();
 		rec.add(recY);
 		rec.add(recN);
-		recY.setSelected(true);
+		recN.setSelected(true);
 		recP.add(recLabel);
 		recP.add(recY);
 		recP.add(recN);
@@ -65,6 +67,7 @@ public class FenetreAjout extends FenetreEvenement{
 
 		elements.add(recP);
 		elements.add(perP);
+		elements.getComponent(8).setVisible(false);
 		validation.addActionListener(new AddEvent());
 	}
 
@@ -78,11 +81,10 @@ public class FenetreAjout extends FenetreEvenement{
 		@Override 
 		public void actionPerformed(ActionEvent arg0){
 			boolean incorrectEvent = true;
-			JOptionPane lettre;
+			JOptionPane lettre = new JOptionPane();
 			CDate begin;
 			CDate end;
 			ArrayList<ICalEvent> liste;
-			// TODO Cr�er un URI automatiquement --> Et r�currence
 
 			try{
 				// Creation des differentes informations d'un evenement
@@ -116,10 +118,12 @@ public class FenetreAjout extends FenetreEvenement{
 					// On ferme la fenetre si tout est bon
 					close();
 				}
+				else{
+					lettre.showMessageDialog(null, "Veuillez vérifier la cohérence de la date et entre l'heure de début et fin. \n Veuillez aussi vérifier que le champ 'Titre' est rempli.", "Attention", JOptionPane.WARNING_MESSAGE,stop);
+				}
 			}
 			catch (java.lang.NumberFormatException e){
-				lettre = new JOptionPane();
-				lettre.showMessageDialog(null, "Merci de ne rentrer que des chiffres pour la date et les heures !!!", "Attention", JOptionPane.WARNING_MESSAGE);
+				lettre.showMessageDialog(null, "Merci de ne rentrer que des chiffres pour la date et les heures !!!", "Attention", JOptionPane.WARNING_MESSAGE,stop);
 			}
 		}
 	}

@@ -16,17 +16,18 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -64,12 +65,18 @@ public class MainWindow extends JFrame {
 	private JPanel my_panel2 = new JPanel();
 
 	private JTable board;
+	
+	private ImageIcon developpeur;
 
 	public MainWindow(){
 		this.setTitle("Logiciel de gestion d'emploi du temps");
 		this.setSize(900,550);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  
+		
+		this.addButton.setEnabled(false);
+		this.modifyButton.setEnabled(false);
+		this.deleteButton.setEnabled(false);
 
 		//addind items to JBarMenu
 		this.tab1.add(item1_1);
@@ -138,6 +145,8 @@ public class MainWindow extends JFrame {
 			textInformation.setText("---------- Informations ----------" + "\n" +
 					event.toString() + "\n" +
 					"Uid : " + event.getUID() + "\n");
+			modifyButton.setEnabled(true);
+			deleteButton.setEnabled(true);
 		}
 
 		@Override
@@ -199,7 +208,8 @@ public class MainWindow extends JFrame {
 				String uid = e.getUID();
 				Object[] contenu = {date, hour, module,uid}; 
 				modelTemp.addRow(contenu); 	
-			}          
+			}  
+			addButton.setEnabled(true);
 		}
 	}
 
@@ -208,6 +218,7 @@ public class MainWindow extends JFrame {
 		public void actionPerformed(ActionEvent arg0){
 			ConnectionWindow connecWind = new ConnectionWindow();
 			connecWind.setVisible(true);
+			addButton.setEnabled(true);
 		}
 	}
 
@@ -253,6 +264,9 @@ public class MainWindow extends JFrame {
 			
 			//suppression du contenu de la zone de description de l'event
 			textInformation.setText(TEXTINFORMATIONDEFAULT);
+			board.clearSelection();
+			deleteButton.setEnabled(false);
+			modifyButton.setEnabled(false);
 		}
 	}
 
@@ -260,13 +274,9 @@ public class MainWindow extends JFrame {
 		//Redefinition de la methode actionPerformed()
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			JFrame fenetreDev = new JFrame("Equipe de developpement");
-			fenetreDev.setSize(300,100);
-			fenetreDev.setLocationRelativeTo(null);
-			JTextArea textArea = new JTextArea("Ce logiciel à été développé par : Florian FAGNIEZ,\nGuillaume Coutable et Noémie RULLIER \nM1 ALMA - TPA");
-			JPanel panelDev = new JPanel();
-			fenetreDev.getContentPane().add(textArea, BorderLayout.CENTER); 
-			fenetreDev.setVisible(true);
+			developpeur = new ImageIcon("resources/developpeur.png");
+			JOptionPane about = new JOptionPane();
+			about.showMessageDialog(null, "Ce logiciel à été développé par : Florian FAGNIEZ,\nGuillaume Coutable et Noémie RULLIER \nM1 ALMA - TPA", "Equipe de développement", JOptionPane.INFORMATION_MESSAGE, developpeur);
 		}
 	}
 

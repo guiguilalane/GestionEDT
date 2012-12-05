@@ -36,24 +36,23 @@ public class RemoteCalendarParsor {
 			try{
 				dtend = component.getProperty("DTEND").getValue();
 			} catch (NullPointerException e){
-				String dtDuration = component.getProperty("DURATION").getValue().replaceAll("PT", "");
-				CDate c = new CDate(dtstart);
-				java.util.Calendar calendar = new GregorianCalendar(c.getYear(), c.getMonth()-1, c.getDay(), c.getHour(), c.getMinute());
-				calendar.add(Calendar.HOUR_OF_DAY, new Integer(dtDuration.split("H")[0]).intValue());
-				if(dtDuration.split("H").length > 1){
-					calendar.add(Calendar.MINUTE, new Integer(dtDuration.split("H")[1].split("M")[0]).intValue());
-				
-				}
-				CDate c2 = new CDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH)+1, calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE));
-				dtend = c2.toCalendarForm();
+//				String dtDuration = component.getProperty("DURATION").getValue().replaceAll("PT", "");
+//				CDate c = new CDate(dtstart);
+//				java.util.Calendar calendar = new GregorianCalendar(c.getYear(), c.getMonth()-1, c.getDay(), c.getHour(), c.getMinute());
+//				calendar.add(Calendar.HOUR_OF_DAY, new Integer(dtDuration.split("H")[0]).intValue());
+//				if(dtDuration.split("H").length > 1){
+//					calendar.add(Calendar.MINUTE, new Integer(dtDuration.split("H")[1].split("M")[0]).intValue());
+//				
+//				}
+//				CDate c2 = new CDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH)+1, calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE));
+//				dtend = c2.toCalendarForm();
 			}
 			uid = component.getProperty("UID").getValue();
-			if(component.getProperty("SUMMARY").getValue().split("- ").length == 2){
+//			if(component.getProperty("SUMMARY").getValue().split("- ").length == 2){
 				module = component.getProperty("SUMMARY").getValue().split("- ")[1];
-			} else {
-				module = component.getProperty("SUMMARY").getValue();
-			}
-			
+//			} else {
+//				module = component.getProperty("SUMMARY").getValue();
+//			}
 			
 			if (component.getProperty("SUMMARY").getValue().contains("CM"))
 			{typeCours = CategoriesCourse.CM;}
