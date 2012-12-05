@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 
 import net.fortuna.ical4j.connector.ObjectStoreException;
@@ -44,8 +45,11 @@ public class CreateCalendarWindow extends JFrame {
 	
 	private MainWindow parent;
 	
-	public CreateCalendarWindow(JFrame parent){
+	private JTable board;
+	
+	public CreateCalendarWindow(JFrame parent, JTable board){
 		this.parent = (MainWindow) parent;
+		this.board = board;
 		
 		this.setSize(650, 280);
 		this.setLocationRelativeTo(null);
@@ -110,6 +114,7 @@ public class CreateCalendarWindow extends JFrame {
 			try {
 				mon_gestionnaire.createConnection(userName.getText(), userPwd.getText());
 				mon_gestionnaire.createNewCalendar(calendarName.getText(), description.getText());
+				board.removeAll();
 				close();
 			} catch (MalformedURLException e1) {
 				// TODO Auto-generated catch block

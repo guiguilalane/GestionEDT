@@ -208,7 +208,7 @@ public class MainWindow extends JFrame {
 	class connectToCalendar implements ActionListener{
 		@Override 
 		public void actionPerformed(ActionEvent arg0){
-			CreateCalendarWindow connecWind = new CreateCalendarWindow(getMainWindow());
+			CreateCalendarWindow connecWind = new CreateCalendarWindow(getMainWindow(), board);
 			connecWind.setVisible(true);
 		}
 	}
