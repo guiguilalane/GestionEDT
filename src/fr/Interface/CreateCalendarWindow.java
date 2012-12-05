@@ -3,6 +3,9 @@ package fr.Interface;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.net.MalformedURLException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -10,6 +13,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
+import net.fortuna.ical4j.connector.ObjectStoreException;
+
+import fr.Controler.GestionnaireEDT;
 
 /*
  * 
@@ -35,7 +42,10 @@ public class CreateCalendarWindow extends JFrame {
 	
 	private JPanel myPanel;
 	
-	public CreateCalendarWindow(){
+	private MainWindow parent;
+	
+	public CreateCalendarWindow(JFrame parent){
+		this.parent = (MainWindow) parent;
 		
 		this.setSize(650, 280);
 		this.setLocationRelativeTo(null);
@@ -80,13 +90,35 @@ public class CreateCalendarWindow extends JFrame {
 		top.add(panelPwd);	
 		top.add(validateButton);
 		
+		validateButton.addActionListener(new CreateCalendar());
+		
 		this.setContentPane(top);
 		this.setVisible(true);
 				
 	}
+	
+	public void close(){
+		parent.addButtonEnable(true);
+		this.setVisible(false);
+	}
+	
+	class CreateCalendar implements ActionListener{
 
-	public static void main(String[] args){
-		CreateCalendarWindow fe = new CreateCalendarWindow();
-		fe.setVisible(true);
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			GestionnaireEDT mon_gestionnaire = GestionnaireEDT.getInstance();
+			try {
+				mon_gestionnaire.createConnection(userName.getText(), userPwd.getText());
+				mon_gestionnaire.createNewCalendar(calendarName.getText(), description.getText());
+				close();
+			} catch (MalformedURLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (ObjectStoreException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		
 	}
 }

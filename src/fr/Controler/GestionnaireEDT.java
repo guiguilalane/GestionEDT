@@ -58,28 +58,31 @@ public class GestionnaireEDT extends Observable{
 		iCalevents = new HashMap<String,ICalEvent>();
 		agendaICal = new ICalAgenda((HashMap<String,ICalEvent>) iCalevents);
 		factoryConnection = new ChandlerFactoryConnection();
-		//TODO:a enlever quand fenetre de connection integrée
-		try {
-			createConnection("https://hub.chandlerproject.org/dav/guiguilalane/test6", "plop", "plop");
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ObjectStoreException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		//TODO:a enlever quand fenetre de connection integrée
+//		try {
+//			createConnection("https://hub.chandlerproject.org/dav/guiguilalane/test6", "plop", "plop");
+//		} catch (MalformedURLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (ObjectStoreException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 
 	/**
 	 * create a new connection with a remote calendar
-	 * @param url the remote calendar url
 	 * @param usr the user identifier
 	 * @param mdp the user password
 	 * @throws MalformedURLException when the url is MalFormed
 	 * @throws ObjectStoreException when usr is not connected
 	 */
-	public void createConnection(String url, String usr, String mdp) throws MalformedURLException, ObjectStoreException{
-		connection = factoryConnection.createFactoryConnection(url, usr, mdp);
+	public void createConnection(String usr, String mdp) throws MalformedURLException, ObjectStoreException{
+		connection = factoryConnection.createFactoryConnection(usr, mdp);
+	}
+	
+	public void createNewCalendar(String calName, String calDescription) throws MalformedURLException, ObjectStoreException{
+		connection.createNewCalendar(calName, calDescription);
 	}
 
 	/**
@@ -98,9 +101,9 @@ public class GestionnaireEDT extends Observable{
 		return iCalevents;
 	}
 	
-	public void remplirList(){
+	public void remplirCalendar(String url){
 		try {
-			CalDavCalendarCollection toParse = connection.createCalendar();
+			CalDavCalendarCollection toParse = connection.createCalendar(url);
 			RemoteCalendarParsor.loadingEvent(toParse, iCalevents);
 //			System.out.println(toParse.toString());
 		} catch (ObjectNotFoundException e) {

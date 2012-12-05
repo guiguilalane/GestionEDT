@@ -43,41 +43,38 @@ import fr.Model.Event;
  */
 public class ChandlerConnection extends Connection {
 	
-	protected static String usr;
-	protected static String CalUrl;
-	protected static CalDavCalendarStore store;
 
 	/**
 	 * Allocate and initalize a new ChandlerConnection
-	 * @param url the remote calendar url
 	 * @param usr the user identifier
 	 * @param mdp the user password
 	 * @throws MalformedURLException when the url is MalFormed
 	 * @throws ObjectStoreException when usr is not connected
 	 */
-	public ChandlerConnection(String url, String usr, String mdp) throws MalformedURLException, ObjectStoreException {
+	public ChandlerConnection(String usr, String mdp) throws MalformedURLException, ObjectStoreException {
 		this.url = new URL("https://hub.chandlerproject.org/pim");
 		store = new CalDavCalendarStore("-//Open Source Applications Foundation//NONSGML Chandler Server//EN", this.url, PathResolver.CHANDLER);
-//		store.connect(usr, mdp.toCharArray());
-		//TODO:a enlever quand integration de la fenetre de connexion faite
-		store.connect("guiguilalane", "feuenlat1".toCharArray());
-		this.usr = "guiguilalane"; //TODO
-		CalUrl = url;
+		store.connect(usr, mdp.toCharArray());
+		this.usr = usr;
 	}
 	
 	/* (non-Javadoc)
 	 * @see fr.CalendarConnection.Connection#createCalendar(java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
-	public CalDavCalendarCollection createCalendar() throws ObjectStoreException, ObjectNotFoundException {
+	public CalDavCalendarCollection createCalendar(String url) throws ObjectStoreException, ObjectNotFoundException {
+		CalUrl = url;
 		calendar = store.getCollection(CalUrl);
 		return calendar;
 	}
 
-	public static void createNewCalendar(String CalName,
-			String calDescription, String[] calComponents, Calendar timeZone) throws ObjectStoreException {
+	public CalDavCalendarCollection createNewCalendar(String CalName,
+			String calDescription) throws ObjectStoreException {
+		String[] calComponents = {"VEVENT"};
+		Calendar timeZone = new Calendar();
 		CalUrl = "https://hub.chandlerproject.org/dav/"+usr+"/"+CalName;
-		store.addCollection(CalUrl, CalName, calDescription, calComponents, timeZone);
+		calendar = store.addCollection(CalUrl, CalName, calDescription, calComponents, timeZone);
+		return calendar;
 	}
 
 	/* (non-Javadoc)

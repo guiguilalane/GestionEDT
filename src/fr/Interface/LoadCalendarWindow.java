@@ -2,14 +2,22 @@ package fr.Interface;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.net.MalformedURLException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+
+import net.fortuna.ical4j.connector.ObjectStoreException;
+import fr.Controler.GestionnaireEDT;
+import fr.Model.ICalEvent;
+import fr.utilities.MyModel;
 
 /*
  * 
@@ -24,8 +32,8 @@ public class LoadCalendarWindow extends JFrame {
 	private JPasswordField userPwd = new JPasswordField(40);
 	
 	private JLabel labelURL;
-	private JLabel labelDescription;
-	private JLabel labelCalendarName;
+//	private JLabel labelDescription;
+//	private JLabel labelCalendarName;
 	private JLabel labelUserName;
 	private JLabel labelPwd;
 	
@@ -33,7 +41,13 @@ public class LoadCalendarWindow extends JFrame {
 	
 	private JPanel myPanel;
 	
-	public LoadCalendarWindow(){
+	private MainWindow parent;
+	
+	private JTable board;
+	
+	public LoadCalendarWindow(JFrame parent, JTable board){
+		this.parent = (MainWindow) parent;
+		this.board = board;
 		
 		this.setSize(600, 200);
 		this.setLocationRelativeTo(null);
@@ -44,8 +58,8 @@ public class LoadCalendarWindow extends JFrame {
 	    JPanel top = new JPanel();
 		
 		labelURL = new JLabel("URL : ");
-		labelDescription = new JLabel("Description de l'agenda : ");
-		labelCalendarName = new JLabel("Nom de l'agenda : ");
+//		labelDescription = new JLabel("Description de l'agenda : ");
+//		labelCalendarName = new JLabel("Nom de l'agenda : ");
 		labelUserName = new JLabel("Nom utilisateur : ");
 		labelPwd = new JLabel("Password : ");
 		
@@ -67,14 +81,46 @@ public class LoadCalendarWindow extends JFrame {
 		top.add(panelUserName);
 		top.add(panelPwd);	
 		top.add(validateButton);
+		validateButton.addActionListener(new LoadCalendar());
 		
 		this.setContentPane(top);
 		this.setVisible(true);
 				
 	}
+	
+	public void close(){
+		parent.addButtonEnable(true);
+		this.setVisible(false);
+	}
+	
+	class LoadCalendar implements ActionListener{
 
-	public static void main(String[] args){
-		LoadCalendarWindow  fe = new LoadCalendarWindow ();
-		fe.setVisible(true);
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			GestionnaireEDT mon_gestionnaire = GestionnaireEDT.getInstance();
+			try {
+				mon_gestionnaire.createConnection(userName.getText(), userPwd.getText());
+				mon_gestionnaire.remplirCalendar(uRL.getText());
+				MyModel modelTemp = (MyModel)board.getModel();
+				board.removeAll();
+				for (ICalEvent e : mon_gestionnaire.getICalEvents().values()){
+					String date = e.getdBegin().toDate();
+					String hour = e.getdBegin().toHour() + "-" + e.getdEnd().toHour();
+					String module = e.getModule();
+					String uid = e.getUID();
+					Object[] contenu = {date, hour, module,uid}; 
+					modelTemp.addRow(contenu);
+				}
+				close();
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ObjectStoreException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		
 	}
 }

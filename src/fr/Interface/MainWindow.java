@@ -133,6 +133,15 @@ public class MainWindow extends JFrame {
 		//ajout de l'observateur de GestionnaireEDT
 		EventOperationObserver eoo = new EventOperationObserver();
 		mon_gestionnaire.addObserver(eoo);
+		
+	}
+	
+	private JFrame getMainWindow(){
+		return this;
+	}
+	
+	public void addButtonEnable(boolean b){
+		addButton.setEnabled(b);
 	}
 
 	class MyMouseListener implements MouseListener{
@@ -199,9 +208,8 @@ public class MainWindow extends JFrame {
 	class connectToCalendar implements ActionListener{
 		@Override 
 		public void actionPerformed(ActionEvent arg0){
-			CreateCalendarWindow connecWind = new CreateCalendarWindow();
+			CreateCalendarWindow connecWind = new CreateCalendarWindow(getMainWindow());
 			connecWind.setVisible(true);
-			addButton.setEnabled(true);
 		}
 	}
 
@@ -209,7 +217,7 @@ public class MainWindow extends JFrame {
 	class AddEvent implements ActionListener{
 		//Redefintion de la methode actionPerformed()
 		@Override
-		public void actionPerformed(ActionEvent arg0) {   
+		public void actionPerformed(ActionEvent arg0) {  
 			EventWindow ev = new AddEventWindow(null, true, board);
 			ev.setVisible(true);
 		}
@@ -218,28 +226,28 @@ public class MainWindow extends JFrame {
 	class connectForLoading implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			LoadCalendarWindow ev = new LoadCalendarWindow();
+			LoadCalendarWindow ev = new LoadCalendarWindow(getMainWindow(), board);
 			ev.setVisible(true);
 		}
 	}
 	
-	class SyncronizeWithCalendar implements ActionListener{
-		@Override 
-		public void actionPerformed(ActionEvent arg0){
-			mon_gestionnaire.remplirList();
-			MyModel modelTemp = (MyModel)board.getModel();
-			board.removeAll();
-			for (ICalEvent e : mon_gestionnaire.getICalEvents().values()){
-				String date = e.getdBegin().toDate();
-				String hour = e.getdBegin().toHour() + "-" + e.getdEnd().toHour();
-				String module = e.getModule();
-				String uid = e.getUID();
-				Object[] contenu = {date, hour, module,uid}; 
-				modelTemp.addRow(contenu); 	
-			}  
-			addButton.setEnabled(true);
-		}
-	}
+//	class SyncronizeWithCalendar implements ActionListener{
+//		@Override 
+//		public void actionPerformed(ActionEvent arg0){
+//			mon_gestionnaire.remplirList();
+//			MyModel modelTemp = (MyModel)board.getModel();
+//			board.removeAll();
+//			for (ICalEvent e : mon_gestionnaire.getICalEvents().values()){
+//				String date = e.getdBegin().toDate();
+//				String hour = e.getdBegin().toHour() + "-" + e.getdEnd().toHour();
+//				String module = e.getModule();
+//				String uid = e.getUID();
+//				Object[] contenu = {date, hour, module,uid}; 
+//				modelTemp.addRow(contenu); 	
+//			}  
+//			addButton.setEnabled(true);
+//		}
+//	}
 	
 	class ModifyEvent implements ActionListener{
 		//Redefintion de la methode actionPerformed()

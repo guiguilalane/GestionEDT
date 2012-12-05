@@ -28,15 +28,18 @@ public abstract class Connection {
 	protected URL url;
 	protected String CalUrl;
 	protected CalDavCalendarCollection calendar;
+	protected String usr;
+	protected CalDavCalendarStore store;
 	
 	/**
 	 * 
+	 * @param url the remote Calendar url
 	 * @return a calendar
 	 * @throws ObjectNotFoundException when the calendar is not found 
 	 * @throws ObjectStoreException when the objectStore throws an exception
 	 */
 	//Pour iCal4j CaldDavCalendarCollection => calendrier.
-	public abstract CalDavCalendarCollection createCalendar() throws ObjectStoreException, ObjectNotFoundException;
+	public abstract CalDavCalendarCollection createCalendar(String url) throws ObjectStoreException, ObjectNotFoundException;
 	
 //	/**
 //	 * 
@@ -62,6 +65,8 @@ public abstract class Connection {
 	 */
 	public abstract Calendar createEvent(String timeZone, Event ev) throws IOException, URISyntaxException, ParseException, ObjectStoreException, ConstraintViolationException;
 	
+	
+	public abstract CalDavCalendarCollection createNewCalendar(String CalName,	String calDescription) throws ObjectStoreException;
 	/**
 	 * @return a uid
 	 */
