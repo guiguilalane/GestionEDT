@@ -99,4 +99,8 @@ public abstract class Connection {
 	 */
 	public abstract void addEvent(Calendar event) throws ObjectStoreException, ConstraintViolationException;
 	
+	public void Disconnect(){
+		store.disconnect();
+	}
+	
 }

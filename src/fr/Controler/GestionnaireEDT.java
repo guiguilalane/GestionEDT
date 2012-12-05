@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Observable;
+import java.util.Observer;
 
 import net.fortuna.ical4j.connector.ObjectNotFoundException;
 import net.fortuna.ical4j.connector.ObjectStoreException;
@@ -37,6 +38,8 @@ import fr.fileTools.RemoteCalendarParsor;
  *
  */
 public class GestionnaireEDT extends Observable{
+	
+	private Observer observer;
 
 	private AgendaFactory factoryICal;
 
@@ -78,6 +81,7 @@ public class GestionnaireEDT extends Observable{
 	 * @throws ObjectStoreException when usr is not connected
 	 */
 	public void createConnection(String usr, String mdp) throws MalformedURLException, ObjectStoreException{
+		super.addObserver(observer);
 		connection = factoryConnection.createFactoryConnection(usr, mdp);
 	}
 	
@@ -101,21 +105,24 @@ public class GestionnaireEDT extends Observable{
 		return iCalevents;
 	}
 	
-	public void remplirCalendar(String url){
+	public void remplirCalendar(String url) throws ObjectNotFoundException{
 		try {
 			CalDavCalendarCollection toParse = connection.createCalendar(url);
 			RemoteCalendarParsor.loadingEvent(toParse, iCalevents);
 //			System.out.println(toParse.toString());
-		} catch (ObjectNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (ObjectStoreException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+	
+	public void clearEventModel(){
+		iCalevents.clear();
+	}
 
 	public void remplirList(String name) throws FileNotFoundException, IOException, ParserException{
+		connection.Disconnect();
+		super.deleteObserver(observer);
 		ICSParsor.loadingEvent(name, iCalevents);            
 	}
 
@@ -218,6 +225,11 @@ public class GestionnaireEDT extends Observable{
 	public void notifierObservateur(HashMap<String, ICalEvent> hash){
 		setChanged();
 		notifyObservers(hash);
+	}
+	
+	@Override
+	public void addObserver(Observer o){
+		observer = o;
 	}
 	
 	

@@ -14,6 +14,9 @@ import javax.swing.JPasswordField;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
+import org.apache.jackrabbit.webdav.DavException;
+
+import net.fortuna.ical4j.connector.ObjectNotFoundException;
 import net.fortuna.ical4j.connector.ObjectStoreException;
 import fr.Controler.GestionnaireEDT;
 import fr.Model.ICalEvent;
@@ -44,6 +47,8 @@ public class LoadCalendarWindow extends JFrame {
 	private MainWindow parent;
 	
 	private JTable board;
+	
+	private static int connectionessai = 0;
 	
 	public LoadCalendarWindow(JFrame parent, JTable board){
 		this.parent = (MainWindow) parent;
@@ -100,25 +105,47 @@ public class LoadCalendarWindow extends JFrame {
 			GestionnaireEDT mon_gestionnaire = GestionnaireEDT.getInstance();
 			try {
 				mon_gestionnaire.createConnection(userName.getText(), userPwd.getText());
-				mon_gestionnaire.remplirCalendar(uRL.getText());
-				MyModel modelTemp = (MyModel)board.getModel();
-				board.removeAll();
-				for (ICalEvent e : mon_gestionnaire.getICalEvents().values()){
-					String date = e.getdBegin().toDate();
-					String hour = e.getdBegin().toHour() + "-" + e.getdEnd().toHour();
-					String module = e.getModule();
-					String uid = e.getUID();
-					Object[] contenu = {date, hour, module,uid}; 
-					modelTemp.addRow(contenu);
-				}
-				close();
 			} catch (MalformedURLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (ObjectStoreException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				if(connectionessai<=3){
+					System.out.println("Vous vous êtes trompé d'identifiant!! \nVeuillez les saisir de nouveau. " + connectionessai);
+					userName.setText("");
+					userPwd.setText("");
+					connectionessai++;
+				} else {
+					connectionessai = 0;
+					setVisible(false);
+				}
+				
 			}
+				board.removeAll();
+				mon_gestionnaire.clearEventModel();
+				try {
+					mon_gestionnaire.remplirCalendar(uRL.getText());
+					MyModel modelTemp = (MyModel)board.getModel();
+					for (ICalEvent e : mon_gestionnaire.getICalEvents().values()){
+						String date = e.getdBegin().toDate();
+						String hour = e.getdBegin().toHour() + "-" + e.getdEnd().toHour();
+						String module = e.getModule();
+						String uid = e.getUID();
+						Object[] contenu = {date, hour, module,uid}; 
+						modelTemp.addRow(contenu);
+					}
+					close();
+				} catch (ObjectNotFoundException e1) {
+					if(connectionessai<=3){
+						System.out.println("le calendrier : " + e1.getMessage() + " n'a pas été trouvé!! \nVeuillez vérifier l'adresse.");
+						connectionessai++;
+					} else {
+						connectionessai = 0;
+						setVisible(false);
+					}
+					
+				}
+				
+			
 			
 		}
 		

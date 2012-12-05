@@ -15,6 +15,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
+import org.apache.jackrabbit.webdav.DavException;
+
 import net.fortuna.ical4j.connector.ObjectStoreException;
 
 import fr.Controler.GestionnaireEDT;
@@ -46,6 +48,9 @@ public class CreateCalendarWindow extends JFrame {
 	private MainWindow parent;
 	
 	private JTable board;
+	
+	private static int connectionessai = 0;
+
 	
 	public CreateCalendarWindow(JFrame parent, JTable board){
 		this.parent = (MainWindow) parent;
@@ -115,14 +120,22 @@ public class CreateCalendarWindow extends JFrame {
 				mon_gestionnaire.createConnection(userName.getText(), userPwd.getText());
 				mon_gestionnaire.createNewCalendar(calendarName.getText(), description.getText());
 				board.removeAll();
+				mon_gestionnaire.clearEventModel();
 				close();
 			} catch (MalformedURLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			} catch (ObjectStoreException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+				if(connectionessai<=3){
+					System.out.println("Vous vous êtes trompé d'identifiant!! \nVeuillez les saisir de nouveau. " + connectionessai);
+					userName.setText("");
+					userPwd.setText("");
+					connectionessai++;
+				} else {
+					connectionessai = 0;
+					setVisible(false);
+				}
+			} 
 		}
 		
 	}
