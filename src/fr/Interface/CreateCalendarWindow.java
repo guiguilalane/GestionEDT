@@ -20,6 +20,7 @@ import org.apache.jackrabbit.webdav.DavException;
 import net.fortuna.ical4j.connector.ObjectStoreException;
 
 import fr.Controler.GestionnaireEDT;
+import fr.utilities.MyModel;
 
 /*
  * 
@@ -119,6 +120,8 @@ public class CreateCalendarWindow extends JFrame {
 			try {
 				mon_gestionnaire.createConnection(userName.getText(), userPwd.getText());
 				mon_gestionnaire.createNewCalendar(calendarName.getText(), description.getText());
+				MyModel modelTemp = (MyModel)board.getModel();
+				modelTemp.removeAll();
 				board.removeAll();
 				mon_gestionnaire.clearEventModel();
 				close();

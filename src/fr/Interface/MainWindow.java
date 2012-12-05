@@ -201,14 +201,16 @@ public class MainWindow extends JFrame {
 					mon_gestionnaire.remplirList(file.getName());
 					MyModel modelTemp = (MyModel)board.getModel();
 					board.removeAll();
+					modelTemp.removeAll();
 					for (ICalEvent e : mon_gestionnaire.getICalEvents().values()){
 						String date = e.getdBegin().toDate();
 						String hour = e.getdBegin().toHour() + "-" + e.getdEnd().toHour();
 						String module = e.getModule();
 						String uid = e.getUID();
 						Object[] contenu = {date, hour, module,uid}; 
-						modelTemp.addRow(contenu); 	
-					}               
+						modelTemp.addRow(contenu);
+					}
+					addButton.setEnabled(true);
 				} catch (FileNotFoundException ex) {
 					Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
 				} catch (IOException ex) {

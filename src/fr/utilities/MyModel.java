@@ -77,7 +77,7 @@ public class MyModel extends AbstractTableModel{
          if(indice != position){
             temp[indice2++] = value;
          }
-         System.out.println("Indice = " + indice);
+//         System.out.println("Indice = " + indice);
          indice++;
       }
       this.data = temp;
@@ -85,6 +85,13 @@ public class MyModel extends AbstractTableModel{
       //Cette méthode permet d'avertir le tableau que les données 
       //ont été modifiées, ce qui permet une mise à jour complète du tableau
       this.fireTableDataChanged();
+   }
+   
+   public void removeAll(){
+	   int taille = getRowCount();
+	   while(getRowCount()!=0){
+		   removeRow(0);
+	   }
    }
    
    public void addRow(Object[] data){
