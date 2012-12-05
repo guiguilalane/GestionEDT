@@ -98,8 +98,6 @@ public class GestionnaireEDT {
 	}
 
 	public ICalEvent createEvent(String module, String salle, CategoriesCourse cat, String description, CDate begin, CDate end, boolean rec, boolean per){
-		//TODO faire un connection.createUid() pour récupérer un uid
-		//puis pour ajouter l'event sur le calendrier distant, dans ta fenetreAjout faire "gestionnaireEDT".addEvent() //regarde les paramètre de addEvent
 		String uid = connection.createUid();
 		if(rec){
 			if(per){
@@ -112,10 +110,14 @@ public class GestionnaireEDT {
 		return new ICalEvent(uid, module, salle,cat,description,begin,end);
 	}
 
-	public void modifyEvent(ICalEvent event){
+	public void modifyEvent(ICalEvent e){
 
 	}
 
+	private void addSimpleEvent(ICalEvent e){
+		this.getICalEvents().put(e.getUID(), e);
+	}
+	
 	public ArrayList<ICalEvent> addEvent(ICalEvent event, int mois){
 		ArrayList<ICalEvent> listRec = new ArrayList();
 		int moisCourant;
@@ -126,7 +128,7 @@ public class GestionnaireEDT {
 		moisCourant = c.get(Calendar.MONTH);
 		int nbMoisAjoute = 0;
 		int nb = 1;
-		this.getICalEvents().put(event.getUID(), event);
+		addSimpleEvent(event);
 		listRec.add(event);
 		if(event.getUID().charAt(0)=='R'){
 			if(event.getUID().charAt(1)=='W'){
@@ -142,7 +144,7 @@ public class GestionnaireEDT {
 				CDate fin = new CDate(c.get(Calendar.YEAR),c.get(Calendar.MONTH)+1,c.get(Calendar.DAY_OF_MONTH),event.getdEnd().getHour(),event.getdEnd().getMinute());
 				ICalEvent e = this.createEvent(event.getModule(), event.getClassRoom(), event.getCourseType(), event.getRemarques(), beg, fin, true, event.getUID().charAt(1)=='W');
 				listRec.add(e);
-				this.getICalEvents().put(e.getUID(), e);
+				addSimpleEvent(e);
 			}
 		}
 		return listRec;
