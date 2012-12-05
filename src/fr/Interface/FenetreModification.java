@@ -72,6 +72,7 @@ public class FenetreModification extends FenetreEvenement{
 				incorrectEvent = ev.incorrectEvenement();
 				if (!incorrectEvent){
 
+					
 					// Modification dans le modele
 					event.setModule(module);
 					event.setClassRoom(salle);
@@ -79,6 +80,8 @@ public class FenetreModification extends FenetreEvenement{
 					event.setRemarques(des);
 					event.setdBegin(begin);
 					event.setdEnd(end);
+					
+					mon_gestionnaire.modifyEvent(event);
 
 					// Modification dans l'interface
 					MyModel modelTemp = (MyModel) board.getModel();

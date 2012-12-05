@@ -26,31 +26,28 @@ import net.fortuna.ical4j.model.ConstraintViolationException;
 public abstract class Connection {
 	
 	protected URL url;
-	protected CalDavCalendarStore store;
-	protected CalDavCalendarCollection calendar;
-	protected String usr;
 	protected String CalUrl;
+	protected CalDavCalendarCollection calendar;
 	
 	/**
 	 * 
-	 * @param url remote calendar location
 	 * @return a calendar
 	 * @throws ObjectNotFoundException when the calendar is not found 
 	 * @throws ObjectStoreException when the objectStore throws an exception
 	 */
 	//Pour iCal4j CaldDavCalendarCollection => calendrier.
-	public abstract CalDavCalendarCollection createCalendar(String url) throws ObjectStoreException, ObjectNotFoundException;
+	public abstract CalDavCalendarCollection createCalendar() throws ObjectStoreException, ObjectNotFoundException;
 	
-	/**
-	 * 
-	 * @param CalName the new calendar name
-	 * @param CalDescription the new calendar description
-	 * @param CalComponents the authorized components : VEVENT, VTODO, ...
-	 * @param timeZone the TimeZone
-	 * @return en new Calendar
-	 * @throws ObjectStoreException when the objectStore throws an exception
-	 */
-	public abstract CalDavCalendarCollection createNewCalendar(String CalName, String CalDescription, String[] CalComponents, Calendar timeZone) throws ObjectStoreException;
+//	/**
+//	 * 
+//	 * @param CalName the new calendar name
+//	 * @param CalDescription the new calendar description
+//	 * @param CalComponents the authorized components : VEVENT, VTODO, ...
+//	 * @param timeZone the TimeZone
+//	 * @return en new Calendar
+//	 * @throws ObjectStoreException when the objectStore throws an exception
+//	 */
+//	public abstract CalDavCalendarCollection createNewCalendar(String CalName, String CalDescription, String[] CalComponents, Calendar timeZone) throws ObjectStoreException;
 	
 	//Pour iCal4j Calendar => event
 	/**
@@ -60,8 +57,10 @@ public abstract class Connection {
 	 * @throws ParseException when a parse error throws
 	 * @throws URISyntaxException when a URI Syntax throws
 	 * @throws IOException when a IO error throws
+	 * @throws ConstraintViolationException when the objectStore throw an exception
+	 * @throws ObjectStoreException when an adding calendar violation is set
 	 */
-	public abstract Calendar createEvent(String timeZone, Event ev) throws IOException, URISyntaxException, ParseException;
+	public abstract Calendar createEvent(String timeZone, Event ev) throws IOException, URISyntaxException, ParseException, ObjectStoreException, ConstraintViolationException;
 	
 	/**
 	 * @return a uid

@@ -33,6 +33,7 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 
 import net.fortuna.ical4j.data.ParserException;
+import fr.Controler.EventOperationObserver;
 import fr.Controler.GestionnaireEDT;
 import fr.Model.ICalEvent;
 import fr.utilities.MyModel.MyModel;
@@ -120,6 +121,10 @@ public class MainWindow extends JFrame {
 		this.getContentPane().add(new JScrollPane(board), BorderLayout.WEST);
 		this.getContentPane().add(new JScrollPane(textInformation), BorderLayout.EAST);
 		this.getContentPane().add(my_panel2, BorderLayout.SOUTH);
+		
+		//ajout de l'observateur de GestionnaireEDT
+		EventOperationObserver eoo = new EventOperationObserver();
+		mon_gestionnaire.addObserver(eoo);
 	}
 
 	class MyMouseListener implements MouseListener{

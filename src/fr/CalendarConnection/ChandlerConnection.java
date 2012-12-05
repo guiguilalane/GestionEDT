@@ -42,49 +42,49 @@ import fr.Model.Event;
  *
  */
 public class ChandlerConnection extends Connection {
+	
+	protected static String usr;
+	protected static String CalUrl;
+	protected static CalDavCalendarStore store;
 
 	/**
 	 * Allocate and initalize a new ChandlerConnection
+	 * @param url the remote calendar url
 	 * @param usr the user identifier
 	 * @param mdp the user password
 	 * @throws MalformedURLException when the url is MalFormed
 	 * @throws ObjectStoreException when usr is not connected
 	 */
-	public ChandlerConnection(String usr, String mdp) throws MalformedURLException, ObjectStoreException {
-		url = new URL("https://hub.chandlerproject.org/pim");
-		store = new CalDavCalendarStore("-//Open Source Applications Foundation//NONSGML Chandler Server//EN", url, PathResolver.CHANDLER);
+	public ChandlerConnection(String url, String usr, String mdp) throws MalformedURLException, ObjectStoreException {
+		this.url = new URL("https://hub.chandlerproject.org/pim");
+		store = new CalDavCalendarStore("-//Open Source Applications Foundation//NONSGML Chandler Server//EN", this.url, PathResolver.CHANDLER);
 //		store.connect(usr, mdp.toCharArray());
 		//TODO:a enlever quand integration de la fenetre de connexion faite
 		store.connect("guiguilalane", "feuenlat1".toCharArray());
 		this.usr = "guiguilalane"; //TODO
+		CalUrl = url;
 	}
 	
 	/* (non-Javadoc)
 	 * @see fr.CalendarConnection.Connection#createCalendar(java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
-	public CalDavCalendarCollection createCalendar(String url) throws ObjectStoreException, ObjectNotFoundException {
-		CalUrl = url;
-		calendar = store.getCollection(url);
+	public CalDavCalendarCollection createCalendar() throws ObjectStoreException, ObjectNotFoundException {
+		calendar = store.getCollection(CalUrl);
 		return calendar;
 	}
 
-	/* (non-Javadoc)
-	 * @see fr.CalendarConnection.Connection#createNewCalendar(java.lang.String, java.lang.String, java.lang.String[], net.fortuna.ical4j.model.Calendar)
-	 */
-	@Override
-	public CalDavCalendarCollection createNewCalendar(String CalName,
+	public static void createNewCalendar(String CalName,
 			String calDescription, String[] calComponents, Calendar timeZone) throws ObjectStoreException {
 		CalUrl = "https://hub.chandlerproject.org/dav/"+usr+"/"+CalName;
-		calendar = store.addCollection(CalUrl, CalName, calDescription, calComponents, timeZone);
-		return calendar;
+		store.addCollection(CalUrl, CalName, calDescription, calComponents, timeZone);
 	}
 
 	/* (non-Javadoc)
 	 * @see fr.CalendarConnection.Connection#createEvent(java.lang.String, fr.Model.CDate, fr.Model.CDate, java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
-	public Calendar createEvent(String timeZone, Event ev) throws IOException, URISyntaxException, ParseException {
+	public Calendar createEvent(String timeZone, Event ev) throws IOException, URISyntaxException, ParseException, ObjectStoreException, ConstraintViolationException {
 		Calendar cal = new Calendar();
 		//add prodId to the event
 		cal.getProperties().add(new ProdId("-//Open Source Applications Foundation//NONSGML Chandler Server//EN"));
