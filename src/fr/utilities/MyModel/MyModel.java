@@ -21,6 +21,18 @@ public class MyModel extends AbstractTableModel{
       this.title = title;
    }
    
+   public int getARowOf(String key, int col) {
+	   int i = 0;
+	   int taille = getRowCount();
+	   while(!data[i][col].toString().equals(key) && i < taille){
+		   i++;
+	   }
+	   if(i>=taille){
+		   i = -1;
+	   }
+	   return i;
+   }
+   
    @Override
    public String getColumnName(int col) {
      return this.title[col];

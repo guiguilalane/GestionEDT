@@ -39,9 +39,9 @@ public class GestionnaireEDT {
 	private Agenda agendaICal;
 
 	private HashMap<String, ICalEvent> iCalevents;
-	
+
 	private FactoryConnection factoryConnection;
-	
+
 	private Connection connection;
 
 	private static int unique = 0;
@@ -54,7 +54,7 @@ public class GestionnaireEDT {
 		iCalevents = new HashMap<String,ICalEvent>();
 		agendaICal = new ICalAgenda((HashMap<String,ICalEvent>) iCalevents);
 		factoryConnection = new ChandlerFactoryConnection();
-		//a enlever quand fenetre de connection integrée
+		//TODO:a enlever quand fenetre de connection integrée
 		try {
 			createConnection("plop", "plop");
 		} catch (MalformedURLException e) {
@@ -65,7 +65,7 @@ public class GestionnaireEDT {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * create a new connection with a remote calendar
 	 * @param usr the user identifier
@@ -100,7 +100,7 @@ public class GestionnaireEDT {
 	public ICalEvent createEvent(String module, String salle, CategoriesCourse cat, String description, CDate begin, CDate end, boolean rec, boolean per){
 		//TODO faire un connection.createUid() pour récupérer un uid
 		//puis pour ajouter l'event sur le calendrier distant, dans ta fenetreAjout faire "gestionnaireEDT".addEvent() //regarde les paramètre de addEvent
-		String uid = "bloup";
+		String uid = connection.createUid();
 		if(rec){
 			if(per){
 				uid ="RW"+uid;
@@ -111,7 +111,7 @@ public class GestionnaireEDT {
 		}
 		return new ICalEvent(uid, module, salle,cat,description,begin,end);
 	}
-	
+
 	public void modifyEvent(ICalEvent event){
 
 	}
@@ -145,23 +145,54 @@ public class GestionnaireEDT {
 				this.getICalEvents().put(e.getUID(), e);
 			}
 		}
-	return listRec;
-}
-
-public static void main(String args[]) throws FileNotFoundException, ParserException, IOException{
-	GestionnaireEDT myEDT = new GestionnaireEDT();
-	myEDT.remplirList("myEDT");
-	for (ICalEvent e : myEDT.iCalevents.values()){
-		System.out.println(e.getUID());
+		return listRec;
 	}
-	//		for(int i=0; i<myEDT.iCalevents.size();i++){
-	//			System.out.println(myEDT.iCalevents. .get(i).getUID());
-	//			System.out.println(myEDT.iCalevents.get(i).getCourseType());
-	//			System.out.println(myEDT.iCalevents.get(i).getdBegin().toString());
-	//			System.out.println(myEDT.iCalevents.get(i).getdEnd().toString());
-	//			System.out.println(myEDT.iCalevents.get(i).getModule());
-	//			System.out.println(myEDT.iCalevents.get(i).getRemarques());
-	//			System.out.println(myEDT.iCalevents.get(i).getClass());                
-	//		}
-}
+
+	public static void main(String args[]) throws FileNotFoundException, ParserException, IOException{
+		GestionnaireEDT myEDT = new GestionnaireEDT();
+		myEDT.remplirList("myEDT");
+		for (ICalEvent e : myEDT.iCalevents.values()){
+			System.out.println(e.getUID());
+		}
+		//		for(int i=0; i<myEDT.iCalevents.size();i++){
+		//			System.out.println(myEDT.iCalevents. .get(i).getUID());
+		//			System.out.println(myEDT.iCalevents.get(i).getCourseType());
+		//			System.out.println(myEDT.iCalevents.get(i).getdBegin().toString());
+		//			System.out.println(myEDT.iCalevents.get(i).getdEnd().toString());
+		//			System.out.println(myEDT.iCalevents.get(i).getModule());
+		//			System.out.println(myEDT.iCalevents.get(i).getRemarques());
+		//			System.out.println(myEDT.iCalevents.get(i).getClass());                
+		//		}
+	}
+
+	public boolean eventIsRecurent(Object key) {
+
+		return iCalevents.get(key).getUID().charAt(0)=='R';
+	}
+
+	public void removeEvent(Object key) {
+		iCalevents.remove(key);
+	}
+
+	public ArrayList<String> removeRecurentEvent(Object key) {
+		ICalEvent event = iCalevents.get(key);
+		ArrayList<String> eventAsup = new ArrayList<String>();
+		for (ICalEvent e : iCalevents.values()){
+			try {
+				e.getdBegin().getDayOfWeek();
+				event.getdBegin().getDayOfWeek();
+				e.getdEnd().getDayOfWeek();
+				event.getdEnd().getDayOfWeek();
+				if (e.equals(event)){
+					eventAsup.add(e.getUID());
+				}
+			}
+			catch (Exception exception){
+			}
+		}
+		for(String s :eventAsup){
+			iCalevents.remove(s);
+		}
+		return eventAsup;
+	}
 }

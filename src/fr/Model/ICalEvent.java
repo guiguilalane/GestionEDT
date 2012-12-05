@@ -1,5 +1,6 @@
 package fr.Model;
 
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -57,5 +58,28 @@ public class ICalEvent extends Event {
 		}
 	}
 	
+	public String toString() {
+		String s = "";
+		s = getCourseType().toString() + " - " + getModule() + "\n" +
+				"Salle : " + getClassRoom() + "\n" +
+				"Le " + getdBegin().toDate() + " de " + getdBegin().toHour() + " à " + getdEnd().toHour() + "\n" +
+				"Description : " + getRemarques();
+		return s;
+	}
+	
+	public boolean equals(ICalEvent ical){
+		boolean bool = false;
+		try {
+			bool = (getdBegin().getDayOfWeek()==ical.getdBegin().getDayOfWeek() &&
+					getdBegin().getHour()==ical.getdBegin().getHour() && 
+					getdBegin().getMinute()==ical.getdBegin().getMinute() &&
+					getdEnd().getDayOfWeek()==ical.getdEnd().getDayOfWeek() &&
+					getdEnd().getHour()==ical.getdEnd().getHour() &&
+					getdEnd().getMinute()==ical.getdEnd().getMinute() && 
+					getModule().equals(ical.getModule()));
+		} catch (ParseException e) {
+		}
+		return bool;
+	}
 	
 }

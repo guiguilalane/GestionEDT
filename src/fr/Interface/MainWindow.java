@@ -17,6 +17,7 @@ import java.awt.event.MouseListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,6 +39,8 @@ import fr.utilities.MyModel.MyModel;
 
 public class MainWindow extends JFrame {
 
+	private static final String TEXTINFORMATIONDEFAULT = "--- Informations sur le module selectionné dans le tableau de droite---";
+	
 	private GestionnaireEDT mon_gestionnaire = GestionnaireEDT.getInstance();
 	/* Menu déroulant*/
 	private JMenuBar my_menuBar = new JMenuBar();
@@ -90,14 +93,14 @@ public class MainWindow extends JFrame {
 		modifyButton.addActionListener(new ModifyEvent());
 		deleteButton.addActionListener(new DelRowListener());
 
-		//Les donnes du tableau
+		//Les données du tableau
 		Object[][] donnees = {
 		};
 
 		//Les titres des colonnes
 		String titres[] = {"Date", "Horaires", "Matières"};
 
-		textInformation = new JTextArea("--- Informations sur le module selectionné dans le tableau de droite---");  
+		textInformation = new JTextArea(TEXTINFORMATIONDEFAULT);  
 		textInformation.setEditable(false);
 
 		//my_panel1.add(textInformation);
@@ -128,10 +131,8 @@ public class MainWindow extends JFrame {
 			HashMap<String,ICalEvent> listTemp = mon_gestionnaire.getICalEvents();
 			ICalEvent event = listTemp.get(modelTemp.getValueAt(selectedRow, 3));
 			textInformation.setText("---------- Informations ----------" + "\n" +
-					event.getCourseType().toString() + " - " + (String) event.getModule() + "\n" +
-					"Salle : " + (String) event.getClassRoom() + "\n" +
-					"Le " + event.getdBegin().toDate() + " de " + event.getdBegin().toHour() + " à " + event.getdEnd().toHour() + "\n" +
-					"Description : " + event.getRemarques() + "\n");
+					event.toString() + "\n" +
+					"Uid : " + event.getUID() + "\n");
 		}
 
 		@Override
@@ -216,36 +217,20 @@ public class MainWindow extends JFrame {
 		public void actionPerformed(ActionEvent arg0){   
 			int selectedRow = board.getSelectedRow(); 
 			MyModel modelTemp = (MyModel)board.getModel();
-			HashMap<String,ICalEvent> listTemp = mon_gestionnaire.getICalEvents();
-			char rec = listTemp.get(modelTemp.getValueAt(selectedRow, 3)).getUID().charAt(0);
-			ICalEvent event = listTemp.get(modelTemp.getValueAt(selectedRow, 3));
-			if (rec == '\0'){
-				listTemp.remove(modelTemp.getValueAt(selectedRow, 3));
-			}
-			// Si l'evenement est recurrent 
-			else if(rec == 'R'){
-				for (ICalEvent e : mon_gestionnaire.getICalEvents().values()){
-					try {
-						e.getdBegin().getDayOfWeek();
-						event.getdBegin().getDayOfWeek();
-						e.getdEnd().getDayOfWeek();
-						event.getdEnd().getDayOfWeek();
-						if (e.getdBegin().getDayOfWeek()==event.getdBegin().getDayOfWeek() &&
-								e.getdBegin().getHour()==event.getdBegin().getHour() && 
-								e.getdBegin().getMinute()==event.getdBegin().getMinute() &&
-								e.getdEnd().getDayOfWeek()==event.getdEnd().getDayOfWeek() &&
-								e.getdEnd().getHour()==event.getdEnd().getHour() &&
-								e.getdEnd().getMinute()==event.getdEnd().getMinute() && 
-								e.getModule().equals(event.getModule())){
-							listTemp.remove(e.getUID());
-						}
-					}
-					catch (Exception execption){
-					}
-
+			boolean rec = mon_gestionnaire.eventIsRecurent(modelTemp.getValueAt(selectedRow, 3));
+			if(rec)
+			{
+				ArrayList<String> asup = mon_gestionnaire.removeRecurentEvent(modelTemp.getValueAt(selectedRow, 3));
+				for(String s: asup){
+					modelTemp.removeRow(modelTemp.getARowOf(s, 3));
 				}
+			} else {
+				mon_gestionnaire.removeEvent(modelTemp.getValueAt(selectedRow, 3));
+				modelTemp.removeRow(selectedRow);
 			}
-			modelTemp.removeRow(selectedRow);
+			
+			//suppression du contenu de la zone de description de l'event
+			textInformation.setText(TEXTINFORMATIONDEFAULT);
 		}
 	}
 
