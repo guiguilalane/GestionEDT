@@ -17,8 +17,13 @@ public class ChandlerFactoryConnection extends FactoryConnection {
 	 * @see fr.CalendarConnection.FactoryConnection#createFactoryConnection()
 	 */
 	@Override
-	public Connection createFactoryConnection(String usr, String mdp) throws MalformedURLException, ObjectStoreException {
+	public Connection createConnection(String usr, String mdp) throws MalformedURLException, ObjectStoreException {
 		return new ChandlerConnection(usr, mdp);
+	}
+	
+	@Override
+	public Connection createConnection(){
+		return new ChandlerConnection();
 	}
 
 }

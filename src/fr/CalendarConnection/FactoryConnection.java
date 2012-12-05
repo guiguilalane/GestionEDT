@@ -21,6 +21,8 @@ public abstract class FactoryConnection {
 	 * @throws MalformedURLException when the url is MalFormed
 	 * @throws ObjectStoreException when usr is not connected
 	 */
-	public abstract Connection createFactoryConnection(String usr, String mdp) throws MalformedURLException, ObjectStoreException;
+	public abstract Connection createConnection(String usr, String mdp) throws MalformedURLException, ObjectStoreException;
+	
+	public abstract Connection createConnection();
 
 }

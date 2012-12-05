@@ -61,6 +61,7 @@ public class GestionnaireEDT extends Observable{
 		iCalevents = new HashMap<String,ICalEvent>();
 		agendaICal = new ICalAgenda((HashMap<String,ICalEvent>) iCalevents);
 		factoryConnection = new ChandlerFactoryConnection();
+		connection = factoryConnection.createConnection();
 //		//TODO:a enlever quand fenetre de connection integrée
 //		try {
 //			createConnection("https://hub.chandlerproject.org/dav/guiguilalane/test6", "plop", "plop");
@@ -82,7 +83,7 @@ public class GestionnaireEDT extends Observable{
 	 */
 	public void createConnection(String usr, String mdp) throws MalformedURLException, ObjectStoreException{
 		super.addObserver(observer);
-		connection = factoryConnection.createFactoryConnection(usr, mdp);
+		connection = factoryConnection.createConnection(usr, mdp);
 	}
 	
 	public void createNewCalendar(String calName, String calDescription) throws MalformedURLException, ObjectStoreException{

@@ -43,6 +43,10 @@ import fr.Model.Event;
  */
 public class ChandlerConnection extends Connection {
 	
+	
+	public ChandlerConnection(){
+		
+	}
 
 	/**
 	 * Allocate and initalize a new ChandlerConnection
