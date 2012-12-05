@@ -41,7 +41,7 @@ import fr.utilities.MyModel;
 
 public class MainWindow extends JFrame {
 
-	private static final String TEXTINFORMATIONDEFAULT = "--- Informations sur le module selectionné dans le tableau de droite---";
+	private static final String TEXTINFORMATIONDEFAULT = "--- Informations sur le module selectionné dans le tableau de gauche---";
 	
 	private GestionnaireEDT mon_gestionnaire = GestionnaireEDT.getInstance();
 	/* Menu déroulant*/
