@@ -14,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ import java.util.logging.Logger;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -42,7 +44,8 @@ import fr.utilities.MyModel;
 public class MainWindow extends JFrame {
 
 	private static final String TEXTINFORMATIONDEFAULT = "--- Informations sur le module selectionné dans le tableau de gauche---";
-	
+	private File file;
+	//private File file;
 	private GestionnaireEDT mon_gestionnaire = GestionnaireEDT.getInstance();
 	/* Menu déroulant*/
 	private JMenuBar my_menuBar = new JMenuBar();
@@ -65,18 +68,23 @@ public class MainWindow extends JFrame {
 	private JPanel my_panel2 = new JPanel();
 
 	private JTable board;
-	
+
 	private ImageIcon developpeur;
+
+	private JFileChooser fileChooser;
 
 	public MainWindow(){
 		this.setTitle("Logiciel de gestion d'emploi du temps");
 		this.setSize(900,550);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  
-		
+
 		this.addButton.setEnabled(false);
 		this.modifyButton.setEnabled(false);
 		this.deleteButton.setEnabled(false);
+
+		//add FileChooser
+		fileChooser = new JFileChooser();
 
 		//addind items to JBarMenu
 		this.tab1.add(item1_1);
@@ -84,7 +92,7 @@ public class MainWindow extends JFrame {
 		this.tab1.add(item1_3);
 		this.tab1.add(item1_4);
 		this.tab2.add(item2_1);
-		
+
 		item1_1.addActionListener(new connectToCalendar());
 		item1_2.addActionListener(new connectForLoading());
 		//item1_2.addActionListener(new SyncronizeWithCalendar());
@@ -129,17 +137,17 @@ public class MainWindow extends JFrame {
 		this.getContentPane().add(new JScrollPane(board), BorderLayout.WEST);
 		this.getContentPane().add(new JScrollPane(textInformation), BorderLayout.EAST);
 		this.getContentPane().add(my_panel2, BorderLayout.SOUTH);
-		
+
 		//ajout de l'observateur de GestionnaireEDT
 		EventOperationObserver eoo = new EventOperationObserver();
 		mon_gestionnaire.addObserver(eoo);
-		
+
 	}
-	
+
 	private JFrame getMainWindow(){
 		return this;
 	}
-	
+
 	public void addButtonEnable(boolean b){
 		addButton.setEnabled(b);
 	}
@@ -182,29 +190,36 @@ public class MainWindow extends JFrame {
 
 	class loadingFile implements ActionListener{
 		@Override 
-		public void actionPerformed(ActionEvent arg0){
-			try {						
-				mon_gestionnaire.remplirList("myEDT");
-				MyModel modelTemp = (MyModel)board.getModel();
-				board.removeAll();
-				for (ICalEvent e : mon_gestionnaire.getICalEvents().values()){
-					String date = e.getdBegin().toDate();
-					String hour = e.getdBegin().toHour() + "-" + e.getdEnd().toHour();
-					String module = e.getModule();
-					String uid = e.getUID();
-					Object[] contenu = {date, hour, module,uid}; 
-					modelTemp.addRow(contenu); 	
-				}               
-			} catch (FileNotFoundException ex) {
-				Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-			} catch (IOException ex) {
-				Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-			} catch (ParserException ex) {
-				Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-			}          
+		public void actionPerformed(ActionEvent a){
+			int returnVal = fileChooser.showOpenDialog(MainWindow.this);
+
+			if (returnVal == JFileChooser.APPROVE_OPTION) {
+				file = fileChooser.getSelectedFile();
+				System.out.println(file.getName());
+				try {		
+					mon_gestionnaire.getICalEvents().clear();
+					mon_gestionnaire.remplirList(file.getName());
+					MyModel modelTemp = (MyModel)board.getModel();
+					board.removeAll();
+					for (ICalEvent e : mon_gestionnaire.getICalEvents().values()){
+						String date = e.getdBegin().toDate();
+						String hour = e.getdBegin().toHour() + "-" + e.getdEnd().toHour();
+						String module = e.getModule();
+						String uid = e.getUID();
+						Object[] contenu = {date, hour, module,uid}; 
+						modelTemp.addRow(contenu); 	
+					}               
+				} catch (FileNotFoundException ex) {
+					Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+				} catch (IOException ex) {
+					Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+				} catch (ParserException ex) {
+					Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+				}          
+			}
 		}
 	}
-	
+
 	class connectToCalendar implements ActionListener{
 		@Override 
 		public void actionPerformed(ActionEvent arg0){
@@ -222,7 +237,7 @@ public class MainWindow extends JFrame {
 			ev.setVisible(true);
 		}
 	}
-	
+
 	class connectForLoading implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
@@ -230,25 +245,25 @@ public class MainWindow extends JFrame {
 			ev.setVisible(true);
 		}
 	}
-	
-//	class SyncronizeWithCalendar implements ActionListener{
-//		@Override 
-//		public void actionPerformed(ActionEvent arg0){
-//			mon_gestionnaire.remplirList();
-//			MyModel modelTemp = (MyModel)board.getModel();
-//			board.removeAll();
-//			for (ICalEvent e : mon_gestionnaire.getICalEvents().values()){
-//				String date = e.getdBegin().toDate();
-//				String hour = e.getdBegin().toHour() + "-" + e.getdEnd().toHour();
-//				String module = e.getModule();
-//				String uid = e.getUID();
-//				Object[] contenu = {date, hour, module,uid}; 
-//				modelTemp.addRow(contenu); 	
-//			}  
-//			addButton.setEnabled(true);
-//		}
-//	}
-	
+
+	//	class SyncronizeWithCalendar implements ActionListener{
+	//		@Override 
+	//		public void actionPerformed(ActionEvent arg0){
+	//			mon_gestionnaire.remplirList();
+	//			MyModel modelTemp = (MyModel)board.getModel();
+	//			board.removeAll();
+	//			for (ICalEvent e : mon_gestionnaire.getICalEvents().values()){
+	//				String date = e.getdBegin().toDate();
+	//				String hour = e.getdBegin().toHour() + "-" + e.getdEnd().toHour();
+	//				String module = e.getModule();
+	//				String uid = e.getUID();
+	//				Object[] contenu = {date, hour, module,uid}; 
+	//				modelTemp.addRow(contenu); 	
+	//			}  
+	//			addButton.setEnabled(true);
+	//		}
+	//	}
+
 	class ModifyEvent implements ActionListener{
 		//Redefintion de la methode actionPerformed()
 		@Override
@@ -279,7 +294,7 @@ public class MainWindow extends JFrame {
 				mon_gestionnaire.removeEvent(modelTemp.getValueAt(selectedRow, 3));
 				modelTemp.removeRow(selectedRow);
 			}
-			
+
 			//suppression du contenu de la zone de description de l'event
 			textInformation.setText(TEXTINFORMATIONDEFAULT);
 			board.clearSelection();
