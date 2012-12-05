@@ -13,6 +13,7 @@ import java.util.Observable;
 
 import net.fortuna.ical4j.connector.ObjectNotFoundException;
 import net.fortuna.ical4j.connector.ObjectStoreException;
+import net.fortuna.ical4j.connector.dav.CalDavCalendarCollection;
 import net.fortuna.ical4j.data.ParserException;
 import net.fortuna.ical4j.model.TimeZoneRegistry;
 import net.fortuna.ical4j.model.TimeZoneRegistryFactory;
@@ -27,6 +28,7 @@ import fr.Model.CategoriesCourse;
 import fr.Model.ICalAgenda;
 import fr.Model.ICalEvent;
 import fr.fileTools.ICSParsor;
+import fr.fileTools.RemoteCalendarParsor;
 
 
 
@@ -78,12 +80,6 @@ public class GestionnaireEDT extends Observable{
 	 */
 	public void createConnection(String url, String usr, String mdp) throws MalformedURLException, ObjectStoreException{
 		connection = factoryConnection.createFactoryConnection(url, usr, mdp);
-		try {
-			connection.createCalendar();
-		} catch (ObjectNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	/**
@@ -100,6 +96,20 @@ public class GestionnaireEDT extends Observable{
 
 	public HashMap<String,ICalEvent> getICalEvents(){
 		return iCalevents;
+	}
+	
+	public void remplirList(){
+		try {
+			CalDavCalendarCollection toParse = connection.createCalendar();
+			RemoteCalendarParsor.loadingEvent(toParse, iCalevents);
+//			System.out.println(toParse.toString());
+		} catch (ObjectNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ObjectStoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void remplirList(String name) throws FileNotFoundException, IOException, ParserException{
