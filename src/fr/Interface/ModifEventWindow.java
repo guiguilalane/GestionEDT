@@ -12,15 +12,15 @@ import fr.Controler.GestionnaireEDT;
 import fr.Model.CDate;
 import fr.Model.CategoriesCourse;
 import fr.Model.ICalEvent;
-import fr.utilities.MyModel.MyModel;
+import fr.utilities.MyModel;
 
 
-public class FenetreModification extends FenetreEvenement{
+public class ModifEventWindow extends EventWindow{
 
 	private JTable board;
 	private ICalEvent event;
 
-	public FenetreModification(JFrame parent, boolean modal, JTable boardP, ICalEvent eventP) {
+	public ModifEventWindow(JFrame parent, boolean modal, JTable boardP, ICalEvent eventP) {
 		super(parent, "Modifier votre évenement", modal);
 
 		this.board=boardP;

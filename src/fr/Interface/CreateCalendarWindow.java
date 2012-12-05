@@ -15,7 +15,7 @@ import javax.swing.JTextField;
  * 
  * @author Florian
  */
-public class ConnectionWindow extends JFrame {
+public class CreateCalendarWindow extends JFrame {
 	
 	private JPanel container = new JPanel();
 	
@@ -35,7 +35,7 @@ public class ConnectionWindow extends JFrame {
 	
 	private JPanel myPanel;
 	
-	public ConnectionWindow(){
+	public CreateCalendarWindow(){
 		
 		this.setSize(650, 280);
 		this.setLocationRelativeTo(null);
@@ -86,7 +86,7 @@ public class ConnectionWindow extends JFrame {
 	}
 
 	public static void main(String[] args){
-		ConnectionWindow fe = new ConnectionWindow();
+		CreateCalendarWindow fe = new CreateCalendarWindow();
 		fe.setVisible(true);
 	}
 }

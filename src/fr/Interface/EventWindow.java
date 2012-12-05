@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 
-abstract class FenetreEvenement extends JDialog {
+abstract class EventWindow extends JDialog {
 
 	protected GridLayout gl = new GridLayout();
 	protected JPanel elements = new JPanel();
@@ -33,7 +33,7 @@ abstract class FenetreEvenement extends JDialog {
 	// Creation du bouton de validation
 	protected JButton validation = new JButton("OK");
 	
-	public FenetreEvenement(JFrame parent, String title, boolean modal){
+	public EventWindow(JFrame parent, String title, boolean modal){
 		super(parent, title, modal);
 		//On specifie une taille
 		this.setSize(380, 480);

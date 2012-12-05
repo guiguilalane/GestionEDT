@@ -18,10 +18,10 @@ import fr.Controler.GestionnaireEDT;
 import fr.Model.CDate;
 import fr.Model.CategoriesCourse;
 import fr.Model.ICalEvent;
-import fr.utilities.MyModel.MyModel;
+import fr.utilities.MyModel;
 
 
-public class FenetreAjout extends FenetreEvenement{
+public class AddEventWindow extends EventWindow{
 
 	private JTextField nbMois = new JTextField("1",2);
 	private ButtonGroup rec = new ButtonGroup();
@@ -33,7 +33,7 @@ public class FenetreAjout extends FenetreEvenement{
 	private JTable board;
 	private ImageIcon stop = new ImageIcon("resources/stop.png");
 
-	public FenetreAjout(JFrame parent, boolean modal, JTable boardP) {
+	public AddEventWindow(JFrame parent, boolean modal, JTable boardP) {
 		super(parent, "Ajouter votre evenement", modal);
 		this.board=boardP;
 

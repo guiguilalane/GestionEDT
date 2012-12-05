@@ -37,7 +37,7 @@ import net.fortuna.ical4j.data.ParserException;
 import fr.Controler.EventOperationObserver;
 import fr.Controler.GestionnaireEDT;
 import fr.Model.ICalEvent;
-import fr.utilities.MyModel.MyModel;
+import fr.utilities.MyModel;
 
 public class MainWindow extends JFrame {
 
@@ -216,7 +216,7 @@ public class MainWindow extends JFrame {
 	class connectToCalendar implements ActionListener{
 		@Override 
 		public void actionPerformed(ActionEvent arg0){
-			ConnectionWindow connecWind = new ConnectionWindow();
+			CreateCalendarWindow connecWind = new CreateCalendarWindow();
 			connecWind.setVisible(true);
 			addButton.setEnabled(true);
 		}
@@ -227,7 +227,7 @@ public class MainWindow extends JFrame {
 		//Redefintion de la methode actionPerformed()
 		@Override
 		public void actionPerformed(ActionEvent arg0) {   
-			FenetreEvenement ev = new FenetreAjout(null, true, board);
+			EventWindow ev = new AddEventWindow(null, true, board);
 			ev.setVisible(true);
 		}
 	}
@@ -238,7 +238,7 @@ public class MainWindow extends JFrame {
 			MyModel modelTemp = (MyModel)board.getModel();
 			HashMap<String,ICalEvent> listTemp = mon_gestionnaire.getICalEvents();
 			ICalEvent event = listTemp.get(modelTemp.getValueAt(board.getSelectedRow(), 3));
-			FenetreEvenement ev = new FenetreModification(null, true, board, event);
+			EventWindow ev = new ModifEventWindow(null, true, board, event);
 			ev.setVisible(true);
 		}
 	}
