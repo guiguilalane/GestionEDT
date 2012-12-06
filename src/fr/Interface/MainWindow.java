@@ -44,8 +44,6 @@ import fr.utilities.MyModel;
 public class MainWindow extends JFrame {
 
 	private static final String TEXTINFORMATIONDEFAULT = "--- Informations sur le module selectionné dans le tableau de gauche---";
-	private File file;
-	//private File file;
 	private GestionnaireEDT mon_gestionnaire = GestionnaireEDT.getInstance();
 	/* Menu déroulant*/
 	private JMenuBar my_menuBar = new JMenuBar();
@@ -97,7 +95,7 @@ public class MainWindow extends JFrame {
 		item1_2.addActionListener(new connectForLoading());
 		//item1_2.addActionListener(new SyncronizeWithCalendar());
 		item1_3.addActionListener(new loadingFile());
-		//item1_4.addActionListener();
+		//item1_4.addActionListener(new creatingFile); //Permet de créer un fichier ICS : fonction non-terminé, instable et lente d'exécution
 		item2_1.addActionListener(new ItemListener());
 
 		this.my_menuBar.add(tab1);
@@ -188,17 +186,26 @@ public class MainWindow extends JFrame {
 		}
 	};
 
+	class creatingFile implements ActionListener{
+		@Override 
+		public void actionPerformed(ActionEvent a){
+			CreateICSFileWindow icsW = new CreateICSFileWindow();
+			icsW.setVisible(true);
+		}
+	}
+	
 	class loadingFile implements ActionListener{
 		@Override 
 		public void actionPerformed(ActionEvent a){
+			String path;
 			int returnVal = fileChooser.showOpenDialog(MainWindow.this);
 
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
-				file = fileChooser.getSelectedFile();
-				System.out.println(file.getName());
+				path = fileChooser.getSelectedFile().getPath();
+				System.out.println(path);
 				try {		
 					mon_gestionnaire.getICalEvents().clear();
-					mon_gestionnaire.remplirList(file.getName());
+					mon_gestionnaire.remplirList(path);
 					MyModel modelTemp = (MyModel)board.getModel();
 					board.removeAll();
 					modelTemp.removeAll();
@@ -247,24 +254,6 @@ public class MainWindow extends JFrame {
 			ev.setVisible(true);
 		}
 	}
-
-	//	class SyncronizeWithCalendar implements ActionListener{
-	//		@Override 
-	//		public void actionPerformed(ActionEvent arg0){
-	//			mon_gestionnaire.remplirList();
-	//			MyModel modelTemp = (MyModel)board.getModel();
-	//			board.removeAll();
-	//			for (ICalEvent e : mon_gestionnaire.getICalEvents().values()){
-	//				String date = e.getdBegin().toDate();
-	//				String hour = e.getdBegin().toHour() + "-" + e.getdEnd().toHour();
-	//				String module = e.getModule();
-	//				String uid = e.getUID();
-	//				Object[] contenu = {date, hour, module,uid}; 
-	//				modelTemp.addRow(contenu); 	
-	//			}  
-	//			addButton.setEnabled(true);
-	//		}
-	//	}
 
 	class ModifyEvent implements ActionListener{
 		//Redefintion de la methode actionPerformed()

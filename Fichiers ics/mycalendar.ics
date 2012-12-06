@@ -1,0 +1,19 @@
+BEGIN:VCALENDAR
+PRODID:-//Open Source Applications Foundation//NONSGML Chandler Server//E
+ N
+VERSION:2.0
+CALSCALE:GREGORIAN
+BEGIN:VEVENT
+DTSTAMP:20121205T213030Z
+DTSTART:20121119T070000
+DTEND:20121119T112030
+SUMMARY:TD - TD INFO - X7II010 Génie Logiciel\, M1ALMA - Architectures Lo
+ gicielles\, M1ATAL
+LOCATION:sa U5 (Bât 2)
+DESCRIPTION:Matière : X7II010 Génie Logiciel\nPersonnel : SUNYE\, Gerson\
+ nGroupe : M1ALMA - Architectures Logicielles\, M1ATAL\nSalle : sa U5 (Bâ
+ t 2)\nRemarques : 12-24-12 \n
+TZID:Europe/Paris
+UID:CELCAT - 2013 (88994-13)
+END:VEVENT
+END:VCALENDAR

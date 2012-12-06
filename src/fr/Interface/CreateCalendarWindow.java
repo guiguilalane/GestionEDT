@@ -61,15 +61,10 @@ public class CreateCalendarWindow extends JFrame {
 	    container.setLayout(new BorderLayout());
 	    JPanel top = new JPanel();
 		
-//		labelURL = new JLabel("URL : ");
 		labelDescription = new JLabel("Description de l'agenda : ");
 		labelCalendarName = new JLabel("Nom de l'agenda : ");
 		labelUserName = new JLabel("Nom utilisateur : ");
 		labelPwd = new JLabel("Password : ");
-		
-//		JPanel panelURL = new JPanel();
-//		panelURL.add(labelURL);
-//		panelURL.add(uRL);
 		
 		JPanel panelDescription = new JPanel();
 		panelDescription.add(labelDescription);
@@ -89,7 +84,6 @@ public class CreateCalendarWindow extends JFrame {
 		
 		validateButton = new JButton("Valider");
 		
-//		top.add(panelURL);
 		top.add(panelDescription);
 		top.add(panelCalendarName);
 		top.add(panelUserName);
